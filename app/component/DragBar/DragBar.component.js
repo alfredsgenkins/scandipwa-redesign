@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 /**
  * ScandiPWA - Progressive Web App for Magento
  *
@@ -18,42 +19,34 @@ class DragBar extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            areDetailsOpen: false
-        };
+        this.areDetailsOpen = false;
+        this.animatedTransitionOnce = false;
 
         this.dragBarRef = React.createRef();
         this.onDragEnd = this.onDragEnd.bind(this);
         this.onDrag = this.onDrag.bind(this);
     }
 
-    componentDidMount() {
-        this._setWindowHeight();
-    }
-
     onDrag({ translateY }) {
-        const { areDetailsOpen } = this.state;
-        const windowHeight = window.innerHeight - 240;
+        if (!this.areDetailsOpen && translateY < 0) {
+            CSS.setVariable(this.dragBarRef, 'draggable-y', `${translateY}px`);
+        } else if (this.areDetailsOpen && this.dragBarRef.current.scrollTop === 0 && translateY > 0) {
+            if (!this.animatedTransitionOnce) {
+                this._animateAutoMove();
+                this.animatedTransitionOnce = true;
+            }
 
-        // Update window heigh according to elements on the screen
-        this._setWindowHeight();
-
-        if (!areDetailsOpen && translateY < 0) {
-            CSS.setVariable(this.dragBarRef, 'draggable-y', `${-translateY}px`);
-        } else if (areDetailsOpen && translateY > 150) {
-            CSS.setVariable(this.dragBarRef, 'draggable-y', `${ windowHeight - translateY }px`);
+            CSS.setVariable(this.dragBarRef, 'overflow', 'hidden');
+            CSS.setVariable(this.dragBarRef, 'draggable-y', `calc(-100% + ${180 + translateY}px)`);
         }
     }
 
     onDragEnd(state, callback) {
-        const screenSize = document.getElementsByTagName('main')[0].clientHeight;
-        const { areDetailsOpen } = this.state;
         const { translateY } = state;
 
-        // Update window heigh according to elements on the screen
-        this._setWindowHeight();
+        this.animatedTransitionOnce = false;
 
-        if (!areDetailsOpen) {
+        if (!this.areDetailsOpen) {
             if (translateY > -150) {
                 // details are close and drag is higher than -150px => we close it back
                 callback({
@@ -61,45 +54,56 @@ class DragBar extends Component {
                     lastTranslateY: 0
                 });
 
+                this._animateAutoMove();
                 CSS.setVariable(this.dragBarRef, 'open-bounce-speed', '500ms');
                 CSS.setVariable(this.dragBarRef, 'draggable-y', '0');
             } else {
                 // details are closed, but drag is lower than -150px => we open it completely
                 callback({
                     originalY: 0,
-                    lastTranslateY: screenSize
+                    lastTranslateY: this._getScreenSizeWithAdjustment()
                 });
 
-                this.setState({ areDetailsOpen: true });
+                this.areDetailsOpen = true;
 
+                this._animateAutoMove();
+                CSS.setVariable(this.dragBarRef, 'overflow', 'scroll');
                 CSS.setVariable(this.dragBarRef, 'open-bounce-speed', '0');
-                CSS.setVariable(this.dragBarRef, 'draggable-y', `${window.innerHeight - 240}px`);
+                CSS.setVariable(this.dragBarRef, 'draggable-y', 'calc(-100% + 180px)');
             }
-        } else if (translateY > 150) {
+        } else if (translateY > 50 && this.dragBarRef.current.scrollTop === 0) {
             // details are open and drag is higher than 150px => we close it
             callback({
                 originalY: 0,
                 lastTranslateY: 0
             });
 
-            this.setState({ areDetailsOpen: false });
+            this.areDetailsOpen = false;
 
+            this._animateAutoMove();
             CSS.setVariable(this.dragBarRef, 'open-bounce-speed', '500ms');
             CSS.setVariable(this.dragBarRef, 'draggable-y', '0');
         } else {
             // details are open and drag is lower than 150px => we open it back
             callback({
                 originalY: 0,
-                lastTranslateY: screenSize
+                lastTranslateY: this._getScreenSizeWithAdjustment()
             });
 
+            this._animateAutoMove();
+            CSS.setVariable(this.dragBarRef, 'overflow', 'scroll');
             CSS.setVariable(this.dragBarRef, 'open-bounce-speed', '0');
-            CSS.setVariable(this.dragBarRef, 'draggable-y', `${window.innerHeight - 240}px`);
+            CSS.setVariable(this.dragBarRef, 'draggable-y', 'calc(-100% + 180px)');
         }
     }
 
-    _setWindowHeight() {
-        CSS.setVariable(this.dragBarRef, 'window-height', `${window.innerHeight - 240}px`);
+    _getScreenSizeWithAdjustment() {
+        return document.getElementsByTagName('main')[0].clientHeight;
+    }
+
+    _animateAutoMove() {
+        CSS.setVariable(this.dragBarRef, 'animation-speed', '150ms');
+        setTimeout(() => CSS.setVariable(this.dragBarRef, 'animation-speed', '0'), 150);
     }
 
     render() {
@@ -120,6 +124,7 @@ class DragBar extends Component {
                         <button block="DragBar" elem="CTA" onClick={ () => alert('added to cart') }>Add to cart</button>
                     </header>
                     <div block="DragBar" elem="Details">
+                        <p>We are wrapping the children with a simple Div (styled-components) that gets from the state the x and y translation. We are also passing an indication for dragging and adding a mouse event that will let us do the magic.</p>
                         <p>We are wrapping the children with a simple Div (styled-components) that gets from the state the x and y translation. We are also passing an indication for dragging and adding a mouse event that will let us do the magic.</p>
                         <p>We are wrapping the children with a simple Div (styled-components) that gets from the state the x and y translation. We are also passing an indication for dragging and adding a mouse event that will let us do the magic.</p>
                         <p>We are wrapping the children with a simple Div (styled-components) that gets from the state the x and y translation. We are also passing an indication for dragging and adding a mouse event that will let us do the magic.</p>

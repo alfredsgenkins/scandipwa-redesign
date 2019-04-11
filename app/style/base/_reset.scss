@@ -70,6 +70,14 @@ body {
     color: color(text, black);
 }
 
+html,
+body {
+    overscroll-behavior: contain;
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
 a {
     color: color(text, black);
     text-decoration: inherit;

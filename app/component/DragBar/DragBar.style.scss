@@ -15,16 +15,17 @@
     &-Draggable {
         --draggable-y: 0;
         --open-bounce-speed: 500ms;
-        --window-height: 0;
+        --overflow: hidden;
+        --animation-speed: 0;
 
         position: fixed;
-        bottom: 0;
+        top: calc(100% - 180px);
         width: 100%;
-        bottom: var(--draggable-y);
-        will-change: bottom;
-        transition: 100ms bottom;
-        transform: translateY(calc(100% - 180px));
-        min-height: 100%;
+        will-change: transform;
+        transition: var(--animation-speed) transform;
+        transform: translate3d(0, var(--draggable-y), 0);
+        max-height: 100%;
+        overflow: var(--overflow);
 
         &::after {
             content: '';
@@ -44,10 +45,9 @@
     }
 
     &-Details {
-        overflow: scroll;
-        max-height: var(--window-height);
         transition: max-height 100ms;
         will-change: max-height;
+        background: #fff;
 
         > *:last-of-type {
             padding-bottom: 20px;
@@ -64,7 +64,7 @@
             left: 0;
             right: 0;
             margin: auto;
-            width: 20px;
+            width: 50px;
             height: 4px;
             border-radius: 5px;
             background: #fff;

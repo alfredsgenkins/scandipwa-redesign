@@ -106,7 +106,7 @@ module.exports = {
         watchContentBase: true,
         publicPath: '/',
         historyApiFallback: true,
-        port: 80,
+        port: 1234,
         https: false,
         overlay: true,
         compress: true,

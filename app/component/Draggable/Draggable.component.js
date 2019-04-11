@@ -31,21 +31,37 @@ class Draggable extends Component {
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseMove = this.handleMouseMove.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.handleTouchStart = this.handleTouchStart.bind(this);
+        this.handleTouchMove = this.handleTouchMove.bind(this);
+        this.handleTouchEnd = this.handleTouchEnd.bind(this);
     }
 
     componentWillUnmount() {
         window.removeEventListener('mousemove', this.handleMouseMove);
         window.removeEventListener('mouseup', this.handleMouseUp);
+        window.removeEventListener('touchmove', this.handleTouchMove);
+        window.removeEventListener('touchend', this.handleTouchEnd);
     }
 
-    handleMouseDown({
+    handleTouchStart({ touches }) {
+        window.addEventListener('touchmove', this.handleTouchMove);
+        window.addEventListener('touchend', this.handleTouchEnd);
+
+        if (touches.length === 1) this._handleDragStart(touches[0]);
+    }
+
+    handleMouseDown(event) {
+        window.addEventListener('mousemove', this.handleMouseMove);
+        window.addEventListener('mouseup', this.handleMouseUp);
+
+        this._handleDragStart(event);
+    }
+
+    _handleDragStart({
         clientX,
         clientY
     }) {
         const { onDragStart } = this.props;
-
-        window.addEventListener('mousemove', this.handleMouseMove);
-        window.addEventListener('mouseup', this.handleMouseUp);
 
         if (onDragStart) onDragStart();
 
@@ -54,6 +70,10 @@ class Draggable extends Component {
             originalY: clientY,
             isDragging: true
         });
+    }
+
+    handleTouchMove({ touches }) {
+        if (touches.length === 1) this.handleMouseMove(touches[0]);
     }
 
     handleMouseMove({
@@ -78,11 +98,22 @@ class Draggable extends Component {
         });
     }
 
-    handleMouseUp() {
-        const { onDragEnd } = this.props;
+    handleTouchEnd() {
+        window.removeEventListener('touchmove', this.handleTouchMove);
+        window.removeEventListener('touchend', this.handleTouchEnd);
 
+        this._handleDragEnd();
+    }
+
+    handleMouseUp() {
         window.removeEventListener('mousemove', this.handleMouseMove);
         window.removeEventListener('mouseup', this.handleMouseUp);
+
+        this._handleDragEnd();
+    }
+
+    _handleDragEnd() {
+        const { onDragEnd } = this.props;
 
         onDragEnd(this.state, newState => this.setState({
             ...newState,
@@ -118,6 +149,7 @@ class Draggable extends Component {
               mix={ mix }
               ref={ draggableRef }
               onMouseDown={ this.handleMouseDown }
+              onTouchStart={ this.handleTouchStart }
               onFocus={ () => handleFocus() }
               tabIndex={ 0 }
               role="button"

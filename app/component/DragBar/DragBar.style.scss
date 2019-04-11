@@ -15,6 +15,7 @@
     &-Draggable {
         --draggable-y: 0;
         --open-bounce-speed: 500ms;
+        --window-height: 0;
 
         position: fixed;
         bottom: 0;
@@ -42,6 +43,17 @@
         }
     }
 
+    &-Details {
+        overflow: scroll;
+        max-height: var(--window-height);
+        transition: max-height 100ms;
+        will-change: max-height;
+
+        > *:last-of-type {
+            padding-bottom: 20px;
+        }
+    }
+
     &-Header {
         padding-top: 70px; // 20px + 50px (draggable are offset)
 
@@ -62,16 +74,25 @@
     }
 
     &-Heading {
-        font-size: 1.4rem;
+        font-size: 18px;
         margin-bottom: 3px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        white-space: nowrap;
+        line-height: 1;
     }
 
     &-Price {
-        font-size: 1.2rem;
+        font-size: 15px;
         display: block;
+        line-height: 1;
     }
 
     &-CTA {
+        --button-padding: 13px 23px;
+
         margin-top: 11px;
+        font-size: 13px;
     }
 }

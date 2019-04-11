@@ -1,0 +1,77 @@
+@keyframes bounce {
+    from {
+      transform: translateY(0px);
+    }
+    to {
+      transform: translateY(-5px);
+    }
+}
+
+.DragBar {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &-Draggable {
+        --draggable-y: 0;
+        --open-bounce-speed: 500ms;
+
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        bottom: var(--draggable-y);
+        will-change: bottom;
+        transition: 100ms bottom;
+        transform: translateY(calc(100% - 180px));
+        min-height: 100%;
+
+        &::after {
+            content: '';
+            position: absolute;
+            background: #fff;
+            height: calc(100% - 50px);
+            width: 100%;
+            left: 0;
+            top: 50px;
+            z-index: 1;
+        }
+
+        > * {
+            padding: 20px;
+            z-index: 2;
+        }
+    }
+
+    &-Header {
+        padding-top: 70px; // 20px + 50px (draggable are offset)
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 20px;
+            height: 4px;
+            border-radius: 5px;
+            background: #fff;
+            will-change: transform;
+            animation: bounce var(--open-bounce-speed) infinite alternate;
+        }
+    }
+
+    &-Heading {
+        font-size: 1.4rem;
+        margin-bottom: 3px;
+    }
+
+    &-Price {
+        font-size: 1.2rem;
+        display: block;
+    }
+
+    &-CTA {
+        margin-top: 11px;
+    }
+}

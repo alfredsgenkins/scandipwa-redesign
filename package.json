@@ -4,8 +4,12 @@
   "private": true,
   "author": "Scandiweb info@scandiweb.com",
   "license": "OSL-3.0",
+  "homepage": "http://alfredsgenkins.github.io/scandipwa-redesign",
   "scripts": {
-    "watch": "webpack-dev-server --config ./webpack.config.js"
+    "watch": "webpack-dev-server --config ./webpack.config.js",
+    "build": "webpack --config ./webpack.config.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d app/Magento_Theme/web"
   },
   "browserslist": [
     ">0.2%",
@@ -21,6 +25,7 @@
     }
   },
   "dependencies": {
+    "gh-pages": "^2.0.1",
     "html-react-parser": "^0.6.1",
     "localforage": "^1.7.3",
     "object-hash": "^1.3.1",

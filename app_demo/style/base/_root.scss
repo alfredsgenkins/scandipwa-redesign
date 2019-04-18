@@ -28,6 +28,8 @@
     --field-error: #{color(state, error, true)};
     --field-note: #{color(neutral, base, true)};
 
+    --window-height: 0;
+
     // each item in color map
     @each $name, $color in $colors {
         @if type-of($color) == "map" {

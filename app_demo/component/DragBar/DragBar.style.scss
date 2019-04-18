@@ -7,6 +7,12 @@
     }
 }
 
+@mixin iOS {
+    @supports (-webkit-overflow-scrolling: touch) {
+        @content;
+    }
+}
+
 .DragBar {
     position: relative;
     width: 100%;
@@ -15,16 +21,20 @@
     &-Draggable {
         --draggable-y: 0;
         --open-bounce-speed: 500ms;
-        --window-height: 0;
 
         position: fixed;
+        z-index: 10;
         bottom: 0;
         width: 100%;
         bottom: var(--draggable-y);
         will-change: bottom;
         transition: 100ms bottom;
-        transform: translateY(calc(100% - 180px));
         min-height: 100%;
+        transform: translateY(calc(100% - 180px));
+
+        @include iOS {
+            transform: translateY(calc(100% - 204px));
+        }
 
         &::after {
             content: '';
@@ -45,7 +55,7 @@
 
     &-Details {
         overflow: scroll;
-        max-height: var(--window-height);
+        max-height: calc(var(--window-height) - 240px);
         transition: max-height 100ms;
         will-change: max-height;
 
@@ -56,6 +66,10 @@
 
     &-Header {
         padding-top: 70px; // 20px + 50px (draggable are offset)
+
+        @include iOS {
+            padding-bottom: 44px; // 44px (safari non-clickable area if navigation hidden)
+        }
 
         &::after {
             content: '';

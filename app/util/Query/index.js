@@ -9,5 +9,13 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-@import "./abstract/abstract";
-@import "./base/reset";
+import Field from './Field';
+import Fragment from './Fragment';
+import { prepareQuery, prepareMutation } from './PrepareDocument';
+
+export {
+    Field,
+    Fragment,
+    prepareQuery,
+    prepareMutation
+};

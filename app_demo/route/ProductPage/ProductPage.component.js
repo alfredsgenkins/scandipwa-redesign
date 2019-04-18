@@ -10,22 +10,16 @@
  */
 
 import React, { Component } from 'react';
-import Slider from 'Component/Slider';
+import DragBar from 'Component/DragBar/DragBar.component';
+import Slider from 'Component/Slider/Slider.component';
 import './ProductPage.style';
 
 class ProductPage extends Component {
     render() {
         return (
             <main block="ProductPage">
-                <Slider>
-                    { Array(5).fill().map((_, i) => (
-                        <img
-                          key={ i }
-                          alt={ i }
-                          src={ `/public/img/${i}.jpg` }
-                        />
-                    )) }
-                </Slider>
+                <Slider />
+                <DragBar />
             </main>
         );
     }

@@ -23,6 +23,7 @@ class DragBar extends Component {
         };
 
         this.dragBarRef = React.createRef();
+        this.contentRef = React.createRef();
         this.onDragEnd = this.onDragEnd.bind(this);
         this.onDrag = this.onDrag.bind(this);
     }
@@ -33,20 +34,25 @@ class DragBar extends Component {
 
     onDrag({ translateY }) {
         const { areDetailsOpen } = this.state;
-        const windowHeight = window.innerHeight - 240;
+        const windowHeight = window.innerHeight;
+        const contentScroll = this.contentRef.current.scrollTop;
 
         // Update window heigh according to elements on the screen
         this._setWindowHeight();
 
         if (!areDetailsOpen && translateY < 0) {
             CSS.setVariable(this.dragBarRef, 'draggable-y', `${-translateY}px`);
-        } else if (areDetailsOpen && translateY > 150) {
-            CSS.setVariable(this.dragBarRef, 'draggable-y', `${ windowHeight - translateY }px`);
+        } else if (
+            areDetailsOpen
+            && translateY > 0
+            && windowHeight - translateY > 240
+            && contentScroll === 0
+        ) {
+            CSS.setVariable(this.dragBarRef, 'draggable-y', `${ windowHeight - 240 - translateY }px`);
         }
     }
 
     onDragEnd(state, callback) {
-        const screenSize = document.getElementsByTagName('main')[0].clientHeight;
         const { areDetailsOpen } = this.state;
         const { translateY } = state;
 
@@ -67,7 +73,7 @@ class DragBar extends Component {
                 // details are closed, but drag is lower than -150px => we open it completely
                 callback({
                     originalY: 0,
-                    lastTranslateY: screenSize
+                    lastTranslateY: 0
                 });
 
                 this.setState({ areDetailsOpen: true });
@@ -90,7 +96,7 @@ class DragBar extends Component {
             // details are open and drag is lower than 150px => we open it back
             callback({
                 originalY: 0,
-                lastTranslateY: screenSize
+                lastTranslateY: 0
             });
 
             CSS.setVariable(this.dragBarRef, 'open-bounce-speed', '0');
@@ -99,7 +105,7 @@ class DragBar extends Component {
     }
 
     _setWindowHeight() {
-        CSS.setVariable(this.dragBarRef, 'window-height', `${window.innerHeight - 240}px`);
+        CSS.setVariable({ current: document.body }, 'window-height', `${window.innerHeight}px`);
     }
 
     render() {
@@ -119,7 +125,7 @@ class DragBar extends Component {
                         <span aria-label="Product price" block="DragBar" elem="Price">29.95 EUR</span>
                         <button block="DragBar" elem="CTA" onClick={ () => alert('added to cart') }>Add to cart</button>
                     </header>
-                    <div block="DragBar" elem="Details">
+                    <div block="DragBar" elem="Details" ref={ this.contentRef }>
                         <p>We are wrapping the children with a simple Div (styled-components) that gets from the state the x and y translation. We are also passing an indication for dragging and adding a mouse event that will let us do the magic.</p>
                         <p>We are wrapping the children with a simple Div (styled-components) that gets from the state the x and y translation. We are also passing an indication for dragging and adding a mouse event that will let us do the magic.</p>
                         <p>We are wrapping the children with a simple Div (styled-components) that gets from the state the x and y translation. We are also passing an indication for dragging and adding a mouse event that will let us do the magic.</p>

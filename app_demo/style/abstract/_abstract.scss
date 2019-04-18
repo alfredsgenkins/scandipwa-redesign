@@ -9,5 +9,7 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-@import "./abstract/abstract";
-@import "./base/reset";
+@import "./variables";
+@import "./color";
+@import "./media";
+@import "./button";

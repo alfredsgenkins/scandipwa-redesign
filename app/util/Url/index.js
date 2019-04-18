@@ -9,5 +9,18 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-@import "./abstract/abstract";
-@import "./base/reset";
+import {
+    getUrlParam,
+    getQueryParam,
+    setQueryParams,
+    clearQueriesFromUrl,
+    updateQueryParamWithoutHistory
+} from './Url';
+
+export {
+    getUrlParam,
+    getQueryParam,
+    setQueryParams,
+    clearQueriesFromUrl,
+    updateQueryParamWithoutHistory
+};

@@ -31,7 +31,11 @@ if (process.env.NODE_ENV === 'development') {
 
 class App extends Component {
     render() {
-        return (<ProductPage />);
+        return (
+            <>
+                <ProductPage />
+            </>
+        );
     }
 }
 

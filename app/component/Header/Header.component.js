@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Header.style';
 
 const PDP = 'pdp';
 
@@ -20,8 +21,10 @@ class Header extends Component {
     renderNavigationButton() {
         return (
             <>
-                <button block="Naviagation" element="Back" />
-                <button block="Navigation" element="Close" />
+                {/* <button block="Header" elem="NavigationClose" />
+                <button block="Header" elem="NavigationBack" /> */}
+                <span>B</span>
+                <span>C</span>
             </>
         );
     }
@@ -29,7 +32,7 @@ class Header extends Component {
     renderTitle(title) {
         return (
             <>
-                <h1>{ title }</h1>
+                <h1 block="Header" elem="Title">{ title }</h1>
             </>
         );
     }
@@ -37,7 +40,7 @@ class Header extends Component {
     renderMinicartButton() {
         return (
             <>
-                <span>C</span>
+                <span block="Header" elem="MinicartButton">C</span>
             </>
         );
     }
@@ -51,9 +54,15 @@ class Header extends Component {
 
         return (
             <>
-                { navigation && this.renderNavigationButton() }
-                { title && this.renderTitle() }
-                { minicart && this.renderMinicartButton() }
+                <div block="Header" elem="LeftSide">
+                    { navigation && this.renderNavigationButton() }
+                </div>
+                <div block="Header" elem="Middle">
+                    { title && this.renderTitle('Hello world') }
+                </div>
+                <div block="Header" elem="RightSide">
+                    { minicart && this.renderMinicartButton() }
+                </div>
             </>
         );
     }
@@ -61,7 +70,7 @@ class Header extends Component {
     render() {
         return (
             <header block="Header">
-                <div block="Header" element="Wrapper">
+                <div block="Header" elem="Wrapper">
                     { this.renderHeaderState('pdp') }
                 </div>
             </header>

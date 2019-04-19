@@ -1,0 +1,23 @@
+.Header {
+  &-Wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &-Middle {
+    flex: 1 100%;
+    text-align: center;
+  }
+
+  &-LeftSide {
+    flex: 1 30%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &-RightSide {
+    flex: 1 30%;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

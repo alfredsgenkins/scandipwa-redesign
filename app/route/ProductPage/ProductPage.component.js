@@ -11,12 +11,14 @@
 
 import React, { Component } from 'react';
 import Slider from 'Component/Slider';
+import Header from 'Component/Header';
 import './ProductPage.style';
 
 class ProductPage extends Component {
     render() {
         return (
             <main block="ProductPage">
+                <Header />
                 <Slider>
                     { Array(5).fill().map((_, i) => (
                         <img

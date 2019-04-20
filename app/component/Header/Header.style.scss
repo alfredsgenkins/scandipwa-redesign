@@ -6,6 +6,11 @@
 }
 
 @mixin close-button {
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+	}
 
 	&::before,
 	&::after {
@@ -25,7 +30,6 @@
 }
 
 @mixin back-button {
-
 	&::before,
 	&::after {
 		content: '';
@@ -55,7 +59,6 @@
 }
 
 @mixin menu-button {
-
 	&::before,
 	&::after {
 		content: '';
@@ -94,7 +97,6 @@
 }
 
 @mixin account-button {
-
 	&::before,
 	&::after {
 		content: '';
@@ -125,7 +127,6 @@
 }
 
 @mixin minicart-button {
-
 	&::before,
 	&::after {
 		content: '';
@@ -163,10 +164,16 @@
 }
 
 .Header {
-	&-Nav {
-		height: 50px;
-		display: flex;
-		align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+
+    &-Nav {
+        height: 50px;
+        display: flex;
+        align-items: center;
 		background-color: var(--header-background);
 		padding: 0 1rem;
 	}

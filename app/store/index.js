@@ -2,7 +2,11 @@ import {
     createStore, combineReducers
 } from 'redux';
 
-const reducers = combineReducers({});
+import { HeaderReducer } from 'Store/Header';
+
+const reducers = combineReducers({
+    HeaderReducer
+});
 
 const store = createStore(
     reducers,

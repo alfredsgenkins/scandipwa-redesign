@@ -169,12 +169,12 @@ class Header extends Component {
     }
 
     render() {
-        const { state } = this.props;
+        const { headerStateName } = this.props;
 
         return (
             <header block="Header">
                 <nav block="Header" elem="Nav">
-                    { this.renderHeaderState(state) }
+                    { this.renderHeaderState(headerStateName) }
                 </nav>
             </header>
         );
@@ -182,7 +182,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    state: PropTypes.oneOf([
+    headerStateName: PropTypes.oneOf([
         PDP,
         CATEGORY,
         CUSTOMER_ACCOUNT,

@@ -35,19 +35,15 @@ class Slider extends Component {
     }
 
     componentDidMount() {
-        const { isVertical } = this.props;
+        const sliderChildren = this.draggableRef.current.children;
 
-        if (isVertical) {
-            const sliderChildren = this.draggableRef.current.children;
+        sliderChildren[0].onload = () => {
+            CSS.setVariable(this.sliderRef, 'slider-height', `${sliderChildren[0].offsetHeight}px`);
+        };
 
-            sliderChildren[0].onload = () => {
-                CSS.setVariable(this.sliderRef, 'slider-height', `${sliderChildren[0].offsetHeight}px`);
-            };
-
-            setTimeout(() => {
-                CSS.setVariable(this.sliderRef, 'slider-height', `${sliderChildren[0].offsetHeight}px`);
-            }, 300);
-        }
+        setTimeout(() => {
+            CSS.setVariable(this.sliderRef, 'slider-height', `${sliderChildren[0].offsetHeight}px`);
+        }, 300);
     }
 
     getSlideSize() {

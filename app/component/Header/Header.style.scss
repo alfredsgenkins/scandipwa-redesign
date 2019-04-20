@@ -134,20 +134,27 @@
 	}
 
 	&-Button {
-		opacity: 0;
-		max-width: 0;
-		transition-property: width, opacity;
-		transition-duration: 200ms;
 		overflow: hidden;
-		width: 35px;
 		height: 35px;
-		padding: 0;
 		background: none;
+
+		// animation
+		transition-property: width, opacity, padding;
+		transition-duration: 200ms;
+		transition-delay: 200ms;
+		opacity: 0;
+		padding: 0;
+		width: 0;
 
 		&_visible {
 			opacity: 1;
 			padding: 7.5px;
-			max-width: 100%;
+			width: 35px;
+
+			&::before,
+			&::after {
+				width: 0;
+			}
 		}
 
 		&_type {

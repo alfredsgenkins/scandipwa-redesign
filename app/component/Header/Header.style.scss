@@ -110,12 +110,13 @@
 			top: 1px solid var(--header-color);
 			left: 1px solid var(--header-color);
 			right: 1px solid var(--header-color);
+			top-right-radius: 2px;
+			top-left-radius: 2px;
 		};
 		width: 6px;
 		height: 5px;
 		right: 12px;
 		top: 9px;
-		border-radius: 2px;
 	}
 
 	span {

@@ -134,14 +134,14 @@ class Header extends Component {
 
         return (
             <>
-                <div block="Header" elem="LeftSide">
+                <div block="Header" elem="Section" mods={ { left: true } }>
                     { this.renderNavigationButton(navigation) }
                     { this.renderSearchButton(search) }
                 </div>
-                <div block="Header" elem="Middle">
+                <div block="Header" elem="Section" mods={ { middle: true } }>
                     { this.renderTitle('Hello world') }
                 </div>
-                <div block="Header" elem="RightSide">
+                <div block="Header" elem="Section" mods={ { right: true } }>
                     { this.renderAccountButton(account) }
                     { this.renderMinicartButton(minicart) }
                 </div>

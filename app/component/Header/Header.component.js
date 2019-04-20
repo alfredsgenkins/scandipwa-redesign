@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './Header.style';
 
-const PDP = 'pdp';
-const CATEGORY = 'category';
-const CUSTOMER_ACCOUNT = 'customer_account';
-const HOME_PAGE = 'home';
+export const PDP = 'pdp';
+export const CATEGORY = 'category';
+export const CUSTOMER_ACCOUNT = 'customer_account';
+export const HOME_PAGE = 'home';
 
 class Header extends Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class Header extends Component {
             },
             [CATEGORY]: {
                 navigation: true,
-                search: true,
+                menu: true,
                 title: true,
                 minicart: true
             },
@@ -27,8 +27,7 @@ class Header extends Component {
                 title: true
             },
             [HOME_PAGE]: {
-                navigation: true,
-                search: true,
+                menu: true,
                 title: true,
                 account: true,
                 minicart: true
@@ -45,12 +44,12 @@ class Header extends Component {
 
         if (visible) {
             closeMods = {
-                close: true,
+                type: 'close',
                 visible: navigationButton === 'close'
             };
 
             backMods = {
-                back: true,
+                type: 'back',
                 visible: navigationButton === 'back'
             };
         }
@@ -62,9 +61,7 @@ class Header extends Component {
                   elem="Button"
                   mods={ { ...closeMods } }
                   aria-label="Close"
-                >
-                    X
-                </button>
+                />
                 <button
                   block="Header"
                   elem="Button"
@@ -77,22 +74,26 @@ class Header extends Component {
         );
     }
 
-    renderSearchButton(visible) {
+    renderMenuButton(visible) {
         return (
             <button
               block="Header"
               elem="Button"
-              mods={ { visible, search: true } }
-              aria-label="Search"
-            >
-                S
-            </button>
+              mods={ { visible, type: 'menu' } }
+              aria-label="Go to menu and search"
+            />
         );
     }
 
-    renderTitle(title) {
+    renderTitle(visible) {
         // const { title } = this.props REDUX
-        return <h2 block="Header" elem="Title" mods={ { visible: !!title } }>{ title }</h2>;
+        const title = 'hello, world';
+        return (
+            <>
+                <h2 block="Header" elem="Title" mods={ { visible } }>{ title }</h2>
+                <div block="Header" elem="Mock" />
+            </>
+        );
     }
 
     renderAccountButton(visible) {
@@ -100,11 +101,9 @@ class Header extends Component {
             <button
               block="Header"
               elem="Button"
-              mods={ { visible, account: true } }
+              mods={ { visible, type: 'account' } }
               aria-label="My account"
-            >
-              A
-            </button>
+            />
         );
     }
 
@@ -115,11 +114,10 @@ class Header extends Component {
             <button
               block="Header"
               elem="Button"
-              mods={ { visible, minicart: true } }
+              mods={ { visible, type: 'minicart' } }
               aria-label="Minicart"
             >
-                { cartItemQuantity }
-                C
+                <span>{ cartItemQuantity }</span>
             </button>
         );
     }
@@ -131,31 +129,27 @@ class Header extends Component {
             title,
             minicart,
             account,
-            search
+            menu
         } = this.stateMap[state];
 
         return (
             <>
-                <div block="Header" elem="Section" mods={ { left: true } }>
-                    { this.renderNavigationButton(navigation) }
-                    { this.renderSearchButton(search) }
-                </div>
-                <div block="Header" elem="Section" mods={ { middle: true } }>
-                    { this.renderTitle('Hello world') }
-                </div>
-                <div block="Header" elem="Section" mods={ { right: true } }>
-                    { this.renderAccountButton(account) }
-                    { this.renderMinicartButton(minicart) }
-                </div>
+                { this.renderNavigationButton(navigation) }
+                { this.renderMenuButton(menu) }
+                { this.renderTitle(title) }
+                { this.renderAccountButton(account) }
+                { this.renderMinicartButton(minicart) }
             </>
         );
     }
 
     render() {
+        const { state } = this.props;
+
         return (
             <header block="Header">
                 <nav block="Header" elem="Nav">
-                    { this.renderHeaderState('home') }
+                    { this.renderHeaderState(state) }
                 </nav>
             </header>
         );

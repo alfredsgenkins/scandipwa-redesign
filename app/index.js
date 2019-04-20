@@ -11,8 +11,11 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import AppRouter from 'Route';
+import store from 'Store';
 import 'Style/main';
-import ProductPage from './route/ProductPage/ProductPage.component';
+
 
 // Disable react dev tools in production
 if (process.env.NODE_ENV === 'production'
@@ -31,7 +34,11 @@ if (process.env.NODE_ENV === 'development') {
 
 class App extends Component {
     render() {
-        return (<ProductPage />);
+        return (
+            <Provider store={ store }>
+                <AppRouter />
+            </Provider>
+        );
     }
 }
 

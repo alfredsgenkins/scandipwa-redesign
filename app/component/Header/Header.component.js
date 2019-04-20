@@ -124,13 +124,17 @@ class Header extends Component {
 
     renderHeaderState(state) {
         // const { state } = this.props; ROUTER
+        const source = this.stateMap[state]
+            ? this.stateMap[state]
+            : this.stateMap[HOME_PAGE];
+
         const {
             navigation,
             title,
             minicart,
             account,
             menu
-        } = this.stateMap[state];
+        } = source;
 
         return (
             <>

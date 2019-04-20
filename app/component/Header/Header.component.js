@@ -53,6 +53,7 @@ class Header extends Component {
             const isBackVisible = navigationButtonState === (NAVIGATION_BACK || NAVIGATION_BOTH);
 
             closeMods = {
+<<<<<<< HEAD
                 ...closeMods,
                 isVisible: isCloseVisible
             };
@@ -60,6 +61,15 @@ class Header extends Component {
             backMods = {
                 ...backMods,
                 isVisible: isBackVisible
+=======
+                type: 'close',
+                visible: navigationButton === 'close'
+            };
+
+            backMods = {
+                type: 'back',
+                visible: navigationButton === 'back'
+>>>>>>> Styled header icons
             };
         }
 

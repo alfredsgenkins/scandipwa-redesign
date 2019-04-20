@@ -1,11 +1,12 @@
 :root {
 	--header-background: #fff;
-  --header-color: #000;
-  --header-search-field-background: #f3f3f3;
-  --header-search-field-color: #6e6e6e;
+	--header-color: #000;
+	--header-search-field-background: #f3f3f3;
+	--header-search-field-color: #6e6e6e;
 }
 
 @mixin close-button {
+
 	&::before,
 	&::after {
 		content: '';
@@ -24,34 +25,37 @@
 }
 
 @mixin back-button {
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-  }
 
-  &::before {
-    width: 12px;
-    height: 1px;
-    top: 16px;
-    right: 14px;
-    background-color: var(--header-color);
-  }
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+	}
 
-  &::after {
-    width: 8px;
-    height: 8px;
-    top: 12px;
-    left: 10px;
-    transform: rotate(-45deg);
-    border: {
-      top: 1px solid var(--header-color);
-      left: 1px solid var(--header-color);
-    }
-  }
+	&::before {
+		width: 12px;
+		height: 1px;
+		top: 16px;
+		right: 14px;
+		background-color: var(--header-color);
+	}
+
+	&::after {
+		width: 8px;
+		height: 8px;
+		top: 12px;
+		left: 10px;
+		transform: rotate(-45deg);
+
+		border: {
+			top: 1px solid var(--header-color);
+			left: 1px solid var(--header-color);
+		}
+	}
 }
 
 @mixin menu-button {
+
 	&::before,
 	&::after {
 		content: '';
@@ -90,6 +94,7 @@
 }
 
 @mixin account-button {
+
 	&::before,
 	&::after {
 		content: '';
@@ -120,6 +125,7 @@
 }
 
 @mixin minicart-button {
+
 	&::before,
 	&::after {
 		content: '';
@@ -142,7 +148,9 @@
 			right: 1px solid var(--header-color);
 			top-right-radius: 2px;
 			top-left-radius: 2px;
-		};
+		}
+
+		;
 		width: 6px;
 		height: 5px;
 		right: 12px;
@@ -155,10 +163,10 @@
 }
 
 .Header {
-    &-Nav {
-        height: 50px;
-        display: flex;
-        align-items: center;
+	&-Nav {
+		height: 50px;
+		display: flex;
+		align-items: center;
 		background-color: var(--header-background);
 		padding: 0 1rem;
 	}
@@ -190,11 +198,11 @@
 		&_type {
 			&_close {
 				@include close-button;
-      }
-      
-      &_back {
-        @include back-button;
-      }
+			}
+
+			&_back {
+				@include back-button;
+			}
 
 			&_menu {
 				@include menu-button;
@@ -206,30 +214,31 @@
 
 			&_minicart {
 				@include minicart-button;
-      }
+			}
 		}
-  }
-  
-  &-SearchField {
-    min-width: 0;
-    max-width: 0;
+	}
 
-    background-color: var(--header-search-field-background);
-    position: absolute;
-    left: 44px;
-    font-size: 0.725rem;
+	&-SearchField {
+		min-width: 0;
+		max-width: 0;
 
-    &_isVisible {
-      max-width: 100%;
-      width: 262px;
-      opacity: 1;
-      padding: {
-        top: 6px;
-        bottom: 8px;
-        left: 8px;
-      }
-    }
-  }
+		background-color: var(--header-search-field-background);
+		position: absolute;
+		left: 44px;
+		font-size: 0.725rem;
+
+		&_isVisible {
+			max-width: 100%;
+			width: 262px;
+			opacity: 1;
+
+			padding: {
+				top: 6px;
+				bottom: 8px;
+				left: 8px;
+			}
+		}
+	}
 
 	&-Mock {
 		flex-grow: 1;

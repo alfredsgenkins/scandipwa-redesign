@@ -38,47 +38,87 @@ class Header extends Component {
         this.renderHeaderState = this.renderHeaderState.bind(this);
     }
 
-    renderNavigationButton() {
+    renderNavigationButton(visible) {
+        const navigationButton = 'close'; // REDUX
+        let closeMods = {};
+        let backMods = {};
+
+        if (visible) {
+            closeMods = {
+                visible: navigationButton === 'close'
+            };
+
+            backMods = {
+                visible: navigationButton === 'back'
+            };
+        }
+
         return (
             <>
-                {/* <button block="Header" elem="NavigationClose" />
-                <button block="Header" elem="NavigationBack" /> */}
-                <span block="Header" elem="Icon">B</span>
-                <span block="Header" elem="Icon">C</span>
+                <button
+                  block="Header"
+                  elem="NavigationClose"
+                  mods={ { ...closeMods } }
+                  aria-label="Close"
+                >
+                    X
+                </button>
+                <button
+                  block="Header"
+                  elem="NavigationBack"
+                  mods={ { ...backMods } }
+                  aria-label="Go back"
+                >
+                    B
+                </button>
             </>
         );
     }
 
-    renderSearchButton() {
+    renderSearchButton(visible) {
         return (
-            <>
-                <span block="Header" elem="Icon">S</span>
-            </>
+            <button
+              block="Header"
+              elem="SearchButton"
+              mods={ { visible } }
+              aria-label="Search"
+            >
+                S
+            </button>
         );
     }
 
     renderTitle(title) {
         // const { title } = this.props REDUX
+        return <h2 block="Header" elem="Title" mods={ { visible: !!title } }>{ title }</h2>;
+    }
+
+    renderAccountButton(visible) {
         return (
-            <>
-                <span block="Header" elem="Title">{ title }</span>
-            </>
+            <button
+              block="Header"
+              elem="AccountButton"
+              mods={ { visible } }
+              aria-label="My account"
+            >
+              A
+            </button>
         );
     }
 
-    renderAccountButton() {
-        return (
-            <>
-                <span block="Header" elem="Icon">A</span>
-            </>
-        );
-    }
+    renderMinicartButton(visible) {
+        const cartItemQuantity = 2; // REDUX
 
-    renderMinicartButton() {
         return (
-            <>
-                <span block="Header" elem="Icon">2 C</span>
-            </>
+            <button
+              block="Header"
+              elem="MinicartButton"
+              mods={ { visible } }
+              aria-label="Minicart"
+            >
+                { cartItemQuantity }
+                C
+            </button>
         );
     }
 
@@ -95,15 +135,15 @@ class Header extends Component {
         return (
             <>
                 <div block="Header" elem="LeftSide">
-                    { navigation && this.renderNavigationButton() }
-                    { search && this.renderSearchButton() }
+                    { this.renderNavigationButton(navigation) }
+                    { this.renderSearchButton(search) }
                 </div>
                 <div block="Header" elem="Middle">
-                    { title && this.renderTitle('Hello world') }
+                    { this.renderTitle('Hello world') }
                 </div>
                 <div block="Header" elem="RightSide">
-                    { account && this.renderAccountButton() }
-                    { minicart && this.renderMinicartButton() }
+                    { this.renderAccountButton(account) }
+                    { this.renderMinicartButton(minicart) }
                 </div>
             </>
         );
@@ -112,9 +152,9 @@ class Header extends Component {
     render() {
         return (
             <header block="Header">
-                <div block="Header" elem="Wrapper">
+                <nav block="Header" elem="Nav">
                     { this.renderHeaderState('home') }
-                </div>
+                </nav>
             </header>
         );
     }

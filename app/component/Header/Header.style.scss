@@ -1,11 +1,21 @@
 .Header {
-  height: 50px;
-  &-Wrapper {
+
+  &-Nav {
+    height: 50px;
+    padding-bottom: 15px;
     display: flex;
     align-items: flex-end;
     background-color: red;
-    margin-bottom: 10px;
-    height: 70%;
+  }
+
+  &-Nav {
+    button {
+      display: none;
+    }
+
+    [class*="_visible"] {
+      display: inline-block;
+    }
   }
 
   &-Middle {
@@ -25,10 +35,5 @@
     display: flex;
     justify-content: flex-end;
     margin-right: 15px;
-  }
-
-  &-Icon {
-    width: 24px;
-    text-align: center;
   }
 }

@@ -45,10 +45,12 @@ class Header extends Component {
 
         if (visible) {
             closeMods = {
+                close: true,
                 visible: navigationButton === 'close'
             };
 
             backMods = {
+                back: true,
                 visible: navigationButton === 'back'
             };
         }
@@ -57,7 +59,7 @@ class Header extends Component {
             <>
                 <button
                   block="Header"
-                  elem="NavigationClose"
+                  elem="Button"
                   mods={ { ...closeMods } }
                   aria-label="Close"
                 >
@@ -65,7 +67,7 @@ class Header extends Component {
                 </button>
                 <button
                   block="Header"
-                  elem="NavigationBack"
+                  elem="Button"
                   mods={ { ...backMods } }
                   aria-label="Go back"
                 >
@@ -79,8 +81,8 @@ class Header extends Component {
         return (
             <button
               block="Header"
-              elem="SearchButton"
-              mods={ { visible } }
+              elem="Button"
+              mods={ { visible, search: true } }
               aria-label="Search"
             >
                 S
@@ -97,8 +99,8 @@ class Header extends Component {
         return (
             <button
               block="Header"
-              elem="AccountButton"
-              mods={ { visible } }
+              elem="Button"
+              mods={ { visible, account: true } }
               aria-label="My account"
             >
               A
@@ -112,8 +114,8 @@ class Header extends Component {
         return (
             <button
               block="Header"
-              elem="MinicartButton"
-              mods={ { visible } }
+              elem="Button"
+              mods={ { visible, minicart: true } }
               aria-label="Minicart"
             >
                 { cartItemQuantity }

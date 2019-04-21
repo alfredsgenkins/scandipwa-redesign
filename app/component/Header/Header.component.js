@@ -169,8 +169,7 @@ class Header extends Component {
     }
 
     render() {
-        // const { state } = this.props;
-        const state = 'pdp';
+        const { state } = this.props;
 
         return (
             <header block="Header">
@@ -188,7 +187,7 @@ Header.propTypes = {
         CATEGORY,
         CUSTOMER_ACCOUNT,
         HOME_PAGE
-    ]),
+    ]).isRequired,
     cartItemQuantity: PropTypes.number,
     title: PropTypes.string,
     navigationButtonState: PropTypes.oneOf([
@@ -204,7 +203,7 @@ Header.defaultProps = {
     cartItemQuantity: 0,
     title: '',
     navigationButtonState: NAVIGATION_NONE,
-    isSearchVisible: true
+    isSearchVisible: false
 };
 
 export default Header;

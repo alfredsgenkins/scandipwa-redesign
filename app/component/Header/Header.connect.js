@@ -1,8 +1,13 @@
 import { connect } from 'react-redux';
-import Header from './Header.component';
+import { showOverlayByKey } from 'Store/Overlay';
+import HeaderComponent from './Header.component';
 
 const mapStateToProps = state => ({
     headerStateName: state.HeaderReducer.headerStateName
 });
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = dispatch => ({
+    showOverlay: overlayKey => dispatch(showOverlayByKey(overlayKey))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

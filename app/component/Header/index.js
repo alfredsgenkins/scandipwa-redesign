@@ -1,4 +1,4 @@
-import Header from './Header.connect';
+import HeaderConnect from './Header.connect';
 import HeaderComponent, {
     PDP,
     CATEGORY,
@@ -6,11 +6,11 @@ import HeaderComponent, {
     HOME_PAGE
 } from './Header.component';
 
-export default HeaderComponent;
+export default HeaderConnect;
 export {
     PDP,
     CATEGORY,
     CUSTOMER_ACCOUNT,
     HOME_PAGE,
-    Header
+    HeaderComponent
 };

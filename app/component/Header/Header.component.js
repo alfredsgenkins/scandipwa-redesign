@@ -82,12 +82,15 @@ class Header extends Component {
     }
 
     renderMenuButton(isVisible) {
+        const { showOverlay } = this.props;
+
         return (
             <button
               block="Header"
               elem="Button"
               mods={ { isVisible, type: 'menu' } }
               aria-label="Go to menu and search"
+              onClick={ () => showOverlay('menu') }
             />
         );
     }
@@ -182,6 +185,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+    showOverlay: PropTypes.func.isRequired,
     headerStateName: PropTypes.oneOf([
         PDP,
         CATEGORY,

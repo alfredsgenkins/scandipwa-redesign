@@ -3,9 +3,11 @@ import {
 } from 'redux';
 
 import { HeaderReducer } from 'Store/Header';
+import { OverlayReducer } from 'Store/Overlay';
 
 const reducers = combineReducers({
-    HeaderReducer
+    HeaderReducer,
+    OverlayReducer
 });
 
 const store = createStore(

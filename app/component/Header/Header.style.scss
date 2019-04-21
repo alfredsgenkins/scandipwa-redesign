@@ -1,6 +1,8 @@
 :root {
 	--header-background: #fff;
-	--header-color: #000;
+  --header-color: #000;
+  --header-search-field-background: #f3f3f3;
+  --header-search-field-color: #6e6e6e;
 }
 
 @mixin close-button {
@@ -206,7 +208,20 @@
 				@include minicart-button;
       }
 		}
-	}
+  }
+  
+  &-SearchField {
+    background-color: var(--header-search-field-background);
+    width: 262px;
+    position: absolute;
+    left: 44px;
+    font-size: 0.725rem;
+    padding: {
+      top: 6px;
+      bottom: 8px;
+      left: 8px;
+    }
+  }
 
 	&-Mock {
 		flex-grow: 1;

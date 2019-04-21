@@ -92,6 +92,20 @@ class Header extends Component {
         );
     }
 
+    renderSearchField() {
+        const { isSearchVisible: isVisible } = this.props;
+
+        return (
+            <input
+              placeholder="Search"
+              aria-label="Search field"
+              block="Header"
+              elem="SearchField"
+              mods={ { isVisible, type: 'searchField' } }
+            />
+        );
+    }
+
     renderTitle(isVisible) {
         const { title } = this.props;
 
@@ -146,6 +160,7 @@ class Header extends Component {
             <>
                 { this.renderNavigationButton(navigation) }
                 { this.renderMenuButton(menu) }
+                { this.renderSearchField() }
                 { this.renderTitle(title) }
                 { this.renderAccountButton(account) }
                 { this.renderMinicartButton(minicart) }
@@ -154,7 +169,8 @@ class Header extends Component {
     }
 
     render() {
-        const { state } = this.props;
+        // const { state } = this.props;
+        const state = 'pdp';
 
         return (
             <header block="Header">
@@ -172,7 +188,7 @@ Header.propTypes = {
         CATEGORY,
         CUSTOMER_ACCOUNT,
         HOME_PAGE
-    ]).isRequired,
+    ]),
     cartItemQuantity: PropTypes.number,
     title: PropTypes.string,
     navigationButtonState: PropTypes.oneOf([
@@ -180,13 +196,15 @@ Header.propTypes = {
         NAVIGATION_CLOSE,
         NAVIGATION_CLOSE,
         NAVIGATION_NONE
-    ])
+    ]),
+    isSearchVisible: PropTypes.bool
 };
 
 Header.defaultProps = {
     cartItemQuantity: 0,
     title: '',
-    navigationButtonState: NAVIGATION_NONE
+    navigationButtonState: NAVIGATION_NONE,
+    isSearchVisible: true
 };
 
 export default Header;

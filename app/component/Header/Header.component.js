@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Header.style';
 
 export const PDP = 'pdp';
 export const CATEGORY = 'category';
 export const CUSTOMER_ACCOUNT = 'customer_account';
 export const HOME_PAGE = 'home';
+
+export const NAVIGATION_BACK = 'back';
+export const NAVIGATION_CLOSE = 'close';
+export const NAVIGATION_BOTH = 'both';
+export const NAVIGATION_NONE = 'none';
 
 class Header extends Component {
     constructor(props) {
@@ -37,20 +43,23 @@ class Header extends Component {
         this.renderHeaderState = this.renderHeaderState.bind(this);
     }
 
-    renderNavigationButton(visible) {
-        const navigationButton = 'close'; // REDUX
-        let closeMods = {};
-        let backMods = {};
+    renderNavigationButton(isVisible) {
+        const { navigationButtonState } = this.props;
+        let closeMods = { type: 'close', isVisible: false };
+        let backMods = { type: 'back', isVisible: false };
 
-        if (visible) {
+        if (isVisible) {
+            const isCloseVisible = navigationButtonState === (NAVIGATION_CLOSE || NAVIGATION_BOTH);
+            const isBackVisible = navigationButtonState === (NAVIGATION_BACK || NAVIGATION_BOTH);
+
             closeMods = {
-                type: 'close',
-                visible: navigationButton === 'close'
+                ...closeMods,
+                isVisible: isCloseVisible
             };
 
             backMods = {
-                type: 'back',
-                visible: navigationButton === 'back'
+                ...backMods,
+                isVisible: isBackVisible
             };
         }
 
@@ -67,54 +76,52 @@ class Header extends Component {
                   elem="Button"
                   mods={ { ...backMods } }
                   aria-label="Go back"
-                >
-                    B
-                </button>
+                />
             </>
         );
     }
 
-    renderMenuButton(visible) {
+    renderMenuButton(isVisible) {
         return (
             <button
               block="Header"
               elem="Button"
-              mods={ { visible, type: 'menu' } }
+              mods={ { isVisible, type: 'menu' } }
               aria-label="Go to menu and search"
             />
         );
     }
 
-    renderTitle(visible) {
-        // const { title } = this.props REDUX
-        const title = 'hello, world';
+    renderTitle(isVisible) {
+        const { title } = this.props;
+
         return (
             <>
-                <h2 block="Header" elem="Title" mods={ { visible } }>{ title }</h2>
+                <h2 block="Header" elem="Title" mods={ { isVisible } }>{ title }</h2>
                 <div block="Header" elem="Mock" />
             </>
         );
     }
 
-    renderAccountButton(visible) {
+    renderAccountButton(isVisible) {
         return (
             <button
               block="Header"
               elem="Button"
-              mods={ { visible, type: 'account' } }
+              mods={ { isVisible, type: 'account' } }
               aria-label="My account"
             />
         );
     }
 
-    renderMinicartButton(visible) {
-        const cartItemQuantity = 2; // REDUX
+    renderMinicartButton(isVisible) {
+        const { cartItemQuantity } = this.props;
 
         return (
             <button
               block="Header"
               elem="Button"
-              mods={ { visible, type: 'minicart' } }
+              mods={ { isVisible, type: 'minicart' } }
               aria-label="Minicart"
             >
                 <span>{ cartItemQuantity }</span>
@@ -123,7 +130,6 @@ class Header extends Component {
     }
 
     renderHeaderState(state) {
-        // const { state } = this.props; ROUTER
         const source = this.stateMap[state]
             ? this.stateMap[state]
             : this.stateMap[HOME_PAGE];
@@ -159,5 +165,28 @@ class Header extends Component {
         );
     }
 }
+
+Header.propTypes = {
+    state: PropTypes.oneOf([
+        PDP,
+        CATEGORY,
+        CUSTOMER_ACCOUNT,
+        HOME_PAGE
+    ]).isRequired,
+    cartItemQuantity: PropTypes.number,
+    title: PropTypes.string,
+    navigationButtonState: PropTypes.oneOf([
+        NAVIGATION_BACK,
+        NAVIGATION_CLOSE,
+        NAVIGATION_CLOSE,
+        NAVIGATION_NONE
+    ])
+};
+
+Header.defaultProps = {
+    cartItemQuantity: 0,
+    title: '',
+    navigationButtonState: NAVIGATION_NONE
+};
 
 export default Header;

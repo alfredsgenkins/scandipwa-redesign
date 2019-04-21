@@ -21,6 +21,34 @@
 	}
 }
 
+@mixin back-button {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+  }
+
+  &::before {
+    width: 12px;
+    height: 1px;
+    top: 16px;
+    right: 14px;
+    background-color: var(--header-color);
+  }
+
+  &::after {
+    width: 8px;
+    height: 8px;
+    top: 12px;
+    left: 10px;
+    transform: rotate(-45deg);
+    border: {
+      top: 1px solid var(--header-color);
+      left: 1px solid var(--header-color);
+    }
+  }
+}
+
 @mixin menu-button {
 	&::before,
 	&::after {
@@ -146,7 +174,7 @@
 		padding: 0;
 		width: 0;
 
-		&_visible {
+		&_isVisible {
 			opacity: 1;
 			padding: 7.5px;
 			width: 35px;
@@ -160,7 +188,11 @@
 		&_type {
 			&_close {
 				@include close-button;
-			}
+      }
+      
+      &_back {
+        @include back-button;
+      }
 
 			&_menu {
 				@include menu-button;
@@ -172,7 +204,7 @@
 
 			&_minicart {
 				@include minicart-button;
-			}
+      }
 		}
 	}
 

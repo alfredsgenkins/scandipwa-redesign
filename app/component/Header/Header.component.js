@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import MenuOverlay from 'Component/MenuOverlay';
 import './Header.style';
 
 export const PDP = 'pdp';
 export const CATEGORY = 'category';
 export const CUSTOMER_ACCOUNT = 'customer_account';
 export const HOME_PAGE = 'home';
+export const MENU = 'menu';
+export const MENU_SUBCATEGORY = 'menu_subcategory';
 
 export const NAVIGATION_BACK = 'back';
 export const NAVIGATION_CLOSE = 'close';
@@ -18,7 +21,7 @@ class Header extends Component {
 
         this.stateMap = {
             [PDP]: {
-                navigation: true,
+                back: true,
                 title: true,
                 minicart: true
             },
@@ -37,52 +40,65 @@ class Header extends Component {
                 title: true,
                 account: true,
                 minicart: true
+            },
+            [MENU]: {
+                close: true,
+                search: true
+            },
+            [MENU_SUBCATEGORY]: {
+                back: true,
+                title: true
             }
         };
 
+        this.onBackButtonClick = this.onBackButtonClick.bind(this);
+        this.onCloseButtonClick = this.onCloseButtonClick.bind(this);
         this.renderHeaderState = this.renderHeaderState.bind(this);
     }
 
-    renderNavigationButton(isVisible) {
-        const { navigationButtonState } = this.props;
-        let closeMods = { type: 'close', isVisible: false };
-        let backMods = { type: 'back', isVisible: false };
+    onBackButtonClick() {
+        const { goToPreviousHeaderState } = this.props;
+        const { headerState: { onBackClick } } = this.props;
 
-        if (isVisible) {
-            const isCloseVisible = navigationButtonState === (NAVIGATION_CLOSE || NAVIGATION_BOTH);
-            const isBackVisible = navigationButtonState === (NAVIGATION_BACK || NAVIGATION_BOTH);
+        if (onBackClick) onBackClick();
+        goToPreviousHeaderState();
+    }
 
-            closeMods = {
-                ...closeMods,
-                isVisible: isCloseVisible
-            };
+    onCloseButtonClick() {
+        const { goToPreviousHeaderState, hideActiveOverlay } = this.props;
+        const { headerState: { onCloseClick } } = this.props;
 
-            backMods = {
-                ...backMods,
-                isVisible: isBackVisible
-            };
-        }
+        if (onCloseClick) onCloseClick();
+        goToPreviousHeaderState();
+        hideActiveOverlay();
+    }
 
+    renderBackButton(isVisible) {
         return (
-            <>
-                <button
-                  block="Header"
-                  elem="Button"
-                  mods={ { ...closeMods } }
-                  aria-label="Close"
-                />
-                <button
-                  block="Header"
-                  elem="Button"
-                  mods={ { ...backMods } }
-                  aria-label="Go back"
-                />
-            </>
+            <button
+              block="Header"
+              elem="Button"
+              mods={ { type: 'back', isVisible } }
+              onClick={ this.onBackButtonClick }
+              aria-label="Go back"
+            />
+        );
+    }
+
+    renderCloseButton(isVisible) {
+        return (
+            <button
+              block="Header"
+              elem="Button"
+              mods={ { type: 'close', isVisible } }
+              onClick={ this.onCloseButtonClick }
+              aria-label="Close"
+            />
         );
     }
 
     renderMenuButton(isVisible) {
-        const { showOverlay } = this.props;
+        const { showOverlay, setHeaderState } = this.props;
 
         return (
             <button
@@ -90,14 +106,12 @@ class Header extends Component {
               elem="Button"
               mods={ { isVisible, type: 'menu' } }
               aria-label="Go to menu and search"
-              onClick={ () => showOverlay('menu') }
+              onClick={ () => showOverlay(MENU) && setHeaderState({ name: MENU }) }
             />
         );
     }
 
-    renderSearchField() {
-        const { isSearchVisible: isVisible } = this.props;
-
+    renderSearchField(isVisible) {
         return (
             <input
               placeholder="Search"
@@ -110,7 +124,7 @@ class Header extends Component {
     }
 
     renderTitle(isVisible) {
-        const { title } = this.props;
+        const { headerState: { title } } = this.props;
 
         return (
             <>
@@ -152,18 +166,21 @@ class Header extends Component {
             : this.stateMap[HOME_PAGE];
 
         const {
-            navigation,
+            back,
+            close,
             title,
             minicart,
             account,
-            menu
+            menu,
+            search
         } = source;
 
         return (
             <>
-                { this.renderNavigationButton(navigation) }
+                { this.renderBackButton(back) }
+                { this.renderCloseButton(close) }
                 { this.renderMenuButton(menu) }
-                { this.renderSearchField() }
+                { this.renderSearchField(search) }
                 { this.renderTitle(title) }
                 { this.renderAccountButton(account) }
                 { this.renderMinicartButton(minicart) }
@@ -172,13 +189,14 @@ class Header extends Component {
     }
 
     render() {
-        const { headerStateName } = this.props;
+        const { headerState: { name } } = this.props;
 
         return (
             <header block="Header">
                 <nav block="Header" elem="Nav">
-                    { this.renderHeaderState(headerStateName) }
+                    { this.renderHeaderState(name) }
                 </nav>
+                <MenuOverlay />
             </header>
         );
     }
@@ -186,28 +204,34 @@ class Header extends Component {
 
 Header.propTypes = {
     showOverlay: PropTypes.func.isRequired,
-    headerStateName: PropTypes.oneOf([
-        PDP,
-        CATEGORY,
-        CUSTOMER_ACCOUNT,
-        HOME_PAGE
-    ]).isRequired,
+    goToPreviousHeaderState: PropTypes.func.isRequired,
+    hideActiveOverlay: PropTypes.func.isRequired,
+    setHeaderState: PropTypes.func.isRequired,
+    headerState: PropTypes.shape({
+        name: PropTypes.oneOf([
+            PDP,
+            CATEGORY,
+            CUSTOMER_ACCOUNT,
+            HOME_PAGE,
+            MENU,
+            MENU_SUBCATEGORY
+        ]),
+        title: PropTypes.string,
+        onBackClick: PropTypes.func,
+        onCloseClick: PropTypes.func
+    }).isRequired,
     cartItemQuantity: PropTypes.number,
-    title: PropTypes.string,
     navigationButtonState: PropTypes.oneOf([
         NAVIGATION_BACK,
         NAVIGATION_CLOSE,
         NAVIGATION_BOTH,
         NAVIGATION_NONE
-    ]),
-    isSearchVisible: PropTypes.bool
+    ])
 };
 
 Header.defaultProps = {
     cartItemQuantity: 0,
-    title: '',
-    navigationButtonState: NAVIGATION_NONE,
-    isSearchVisible: false
+    navigationButtonState: NAVIGATION_NONE
 };
 
 export default Header;

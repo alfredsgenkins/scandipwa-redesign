@@ -3,21 +3,33 @@ import PropTypes from 'prop-types';
 import './Overlay.style';
 
 class Overlay extends Component {
+    showOverlay(key) {
+        const { showOverlay } = this.props;
+        showOverlay(key);
+    }
+
     render() {
-        const { children, mods, activeOverlay, key } = this.props;
-        const isVisible = key === activeOverlay;
+        const {
+            children,
+            mix,
+            activeOverlay,
+            id
+        } = this.props;
+
+        const isVisible = id === activeOverlay;
+        const mixProp = { ...mix, mods: { ...mix.mods, isVisible } };
 
         return (
-            <article block="Overlay" mods={ { isVisible: false, ...mods } }>
+            <div block="Overlay" mods={ { isVisible } } mix={ mixProp }>
                 { children }
-            </article>
+            </div>
         );
     }
 }
 
 Overlay.propTypes = {
-    mods: PropTypes.objectOf(PropTypes.string),
-    key: PropTypes.string.isRequired,
+    mix: PropTypes.objectOf(PropTypes.string),
+    id: PropTypes.string.isRequired,
     activeOverlay: PropTypes.string.isRequired,
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.node),
@@ -26,7 +38,7 @@ Overlay.propTypes = {
 };
 
 Overlay.defaultProps = {
-    mods: {}
+    mix: {}
 };
 
 export default Overlay;

@@ -176,6 +176,7 @@
         align-items: center;
 		background-color: var(--header-background);
 		padding: 0 1rem;
+		z-index: 20;
 	}
 
 	&-Button {
@@ -226,18 +227,20 @@
 	}
 
 	&-SearchField {
+		width: 0;
 		min-width: 0;
-		max-width: 0;
-
+		opacity: 0;
 		background-color: var(--header-search-field-background);
-		position: absolute;
-		left: 44px;
 		font-size: 0.725rem;
+		transition-property: width, max-width, opacity, min-width;
+		transition-duration: 200ms;
+		will-change: width, max-width, opacity, min-width;
 
 		&_isVisible {
-			max-width: 100%;
-			width: 262px;
+			width: 100%;
 			opacity: 1;
+			margin-left: 10px;
+			transition-delay: 200ms;
 
 			padding: {
 				top: 6px;

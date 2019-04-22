@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { toggleOverlayByKey } from 'Store/Overlay';
+import { toggleOverlayByKey, hideActiveOverlay } from 'Store/Overlay';
 import { changeHeaderState, goToPreviousHeaderState } from 'Store/Header';
 import HeaderComponent from './Header.component';
 
@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     showOverlay: overlayKey => dispatch(toggleOverlayByKey(overlayKey)),
+    hideActiveOverlay: () => dispatch(hideActiveOverlay()),
     setHeaderState: stateName => dispatch(changeHeaderState(stateName)),
     goToPreviousHeaderState: () => dispatch(goToPreviousHeaderState())
 });

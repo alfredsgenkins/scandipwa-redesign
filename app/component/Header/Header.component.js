@@ -19,8 +19,6 @@ class Header extends Component {
     constructor(props) {
         super(props);
 
-        const { showOverlay, setHeaderState } = props;
-
         this.stateMap = {
             [PDP]: {
                 back: true,
@@ -50,21 +48,38 @@ class Header extends Component {
             [MENU_SUBCATEGORY]: {
                 back: true,
                 title: true
-           }
+            }
         };
 
+        this.onBackButtonClick = this.onBackButtonClick.bind(this);
+        this.onCloseButtonClick = this.onCloseButtonClick.bind(this);
         this.renderHeaderState = this.renderHeaderState.bind(this);
     }
 
-    renderBackButton(isVisible) {
+    onBackButtonClick() {
         const { goToPreviousHeaderState } = this.props;
+        const { headerState: { onBackClick } } = this.props;
 
+        if (onBackClick) onBackClick();
+        goToPreviousHeaderState();
+    }
+
+    onCloseButtonClick() {
+        const { goToPreviousHeaderState, hideActiveOverlay } = this.props;
+        const { headerState: { onCloseClick } } = this.props;
+
+        if (onCloseClick) onCloseClick();
+        goToPreviousHeaderState();
+        hideActiveOverlay();
+    }
+
+    renderBackButton(isVisible) {
         return (
             <button
               block="Header"
               elem="Button"
               mods={ { type: 'back', isVisible } }
-              onClick={ () => goToPreviousHeaderState() }
+              onClick={ this.onBackButtonClick }
               aria-label="Go back"
             />
         );
@@ -76,46 +91,9 @@ class Header extends Component {
               block="Header"
               elem="Button"
               mods={ { type: 'close', isVisible } }
+              onClick={ this.onCloseButtonClick }
               aria-label="Close"
             />
-        );
-    }
-
-    renderNavigationButton(isVisible) {
-        const { navigationButtonState } = this.props;
-        let closeMods = { type: 'close', isVisible: false };
-        let backMods = { type: 'back', isVisible: false };
-
-        if (isVisible) {
-            const isCloseVisible = navigationButtonState === (NAVIGATION_CLOSE || NAVIGATION_BOTH);
-            const isBackVisible = navigationButtonState === (NAVIGATION_BACK || NAVIGATION_BOTH);
-
-            closeMods = {
-                ...closeMods,
-                isVisible: isCloseVisible
-            };
-
-            backMods = {
-                ...backMods,
-                isVisible: isBackVisible
-            };
-        }
-
-        return (
-            <>
-                <button
-                  block="Header"
-                  elem="Button"
-                  mods={ { type: 'close', isVisible: false } }
-                  aria-label="Close"
-                />
-                <button
-                  block="Header"
-                  elem="Button"
-                  mods={ { type: 'back', isVisible: false } }
-                  aria-label="Go back"
-                />
-            </>
         );
     }
 
@@ -146,7 +124,7 @@ class Header extends Component {
     }
 
     renderTitle(isVisible) {
-        const { title } = this.props;
+        const { headerState: { title } } = this.props;
 
         return (
             <>
@@ -226,6 +204,8 @@ class Header extends Component {
 
 Header.propTypes = {
     showOverlay: PropTypes.func.isRequired,
+    goToPreviousHeaderState: PropTypes.func.isRequired,
+    hideActiveOverlay: PropTypes.func.isRequired,
     setHeaderState: PropTypes.func.isRequired,
     headerState: PropTypes.shape({
         name: PropTypes.oneOf([
@@ -235,10 +215,12 @@ Header.propTypes = {
             HOME_PAGE,
             MENU,
             MENU_SUBCATEGORY
-        ])
+        ]),
+        title: PropTypes.string,
+        onBackClick: PropTypes.func,
+        onCloseClick: PropTypes.func
     }).isRequired,
     cartItemQuantity: PropTypes.number,
-    title: PropTypes.string,
     navigationButtonState: PropTypes.oneOf([
         NAVIGATION_BACK,
         NAVIGATION_CLOSE,
@@ -249,7 +231,6 @@ Header.propTypes = {
 
 Header.defaultProps = {
     cartItemQuantity: 0,
-    title: '',
     navigationButtonState: NAVIGATION_NONE
 };
 

@@ -39,6 +39,7 @@ class SelectableInput extends Component {
     }
 
     renderCheckboxInput() {
+        // TODO: Fix checkbox size so that it's clickable
         const {
             id, name, value, formRef, checked, disabled, label
         } = this.props;

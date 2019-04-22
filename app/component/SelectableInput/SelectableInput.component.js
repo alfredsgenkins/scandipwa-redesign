@@ -127,7 +127,7 @@ SelectableInput.propTypes = {
         CHECKBOX_TYPE
     ]).isRequired,
     name: PropTypes.string,
-    value: PropTypes.bool,
+    value: PropTypes.string,
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
     label: PropTypes.string,
@@ -154,7 +154,7 @@ SelectableInput.propTypes = {
 SelectableInput.defaultProps = {
     id: '',
     name: '',
-    value: false,
+    value: '',
     checked: false,
     disabled: false,
     formRef: null,

@@ -54,24 +54,4 @@
       opacity: 1;
       height: 100%;
   }
-
-  &_type {
-      &_checkbox,
-      &_radio {
-          label {
-              &:first-of-type {
-                  display: inline-block;
-
-                  ~ label {
-                      margin-left: 1rem;
-                  }
-              }
-
-              &:last-of-type {
-                  display: inline-block;
-                  vertical-align: middle;
-              }
-          }
-      }
-  }
 }

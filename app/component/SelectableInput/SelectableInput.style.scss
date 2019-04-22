@@ -1,0 +1,29 @@
+.SelectableInput {
+    margin-top: 1rem;
+
+    label {
+        padding-bottom: .3rem;
+        font-weight: 700;
+        font-size: 1.05rem;
+    }
+
+    &_type {
+        &_checkbox,
+        &_radio {
+            label {
+                &:first-of-type {
+                    display: inline-block;
+
+                    ~ label {
+                        margin-left: 1rem;
+                    }
+                }
+
+                &:last-of-type {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}

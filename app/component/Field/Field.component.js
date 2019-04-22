@@ -23,8 +23,6 @@ import './Field.style';
 
 const TEXT_TYPE = 'text';
 const NUMBER_TYPE = 'number';
-const CHECKBOX_TYPE = 'checkbox';
-const RADIO_TYPE = 'radio';
 const TEXTAREA_TYPE = 'textarea';
 const PASSWORD_TYPE = 'password';
 
@@ -50,12 +48,6 @@ class Field extends Component {
             case NUMBER_TYPE:
                 if (value < min) value = min;
                 value = 0;
-                break;
-            case CHECKBOX_TYPE:
-                value = false;
-                break;
-            case RADIO_TYPE:
-                value = false;
                 break;
             default:
                 value = '';
@@ -122,11 +114,6 @@ class Field extends Component {
             if ((value < min || isValueNaN)) return;
             if (onChange) onChange(value);
             this.setState({ value });
-            break;
-        case CHECKBOX_TYPE:
-            const { isChecked } = this.state;
-            if (onChange) onChange(!isChecked);
-            this.setState({ isChecked: !isChecked });
             break;
         default:
             if (onChange) onChange(value);
@@ -231,10 +218,6 @@ class Field extends Component {
 
     renderInputOfType(type) {
         switch (type) {
-        case CHECKBOX_TYPE:
-            return this.renderCheckboxInput();
-        case RADIO_TYPE:
-            return this.renderCheckboxInput();
         case NUMBER_TYPE:
             return this.renderTypeNumber();
         case TEXTAREA_TYPE:
@@ -274,9 +257,7 @@ Field.propTypes = {
     type: PropTypes.oneOf([
         TEXT_TYPE,
         NUMBER_TYPE,
-        CHECKBOX_TYPE,
         TEXTAREA_TYPE,
-        RADIO_TYPE,
         PASSWORD_TYPE
     ]).isRequired,
     label: PropTypes.string,

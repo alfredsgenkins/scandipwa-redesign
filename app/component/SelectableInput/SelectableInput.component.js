@@ -5,6 +5,15 @@ export const RADIO_TYPE = 'radio';
 export const CHECKBOX_TYPE = 'checkbox';
 
 class SelectableInput extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onChange = this.onChange.bind(this);
+        this.onFocus = this.onFocus.bind(this);
+        this.onClick = this.onClick.bind(this);
+        this.onKeyPress = this.onKeyPress.bind(this);
+    }
+
     onChange(event) {
         const { onChange } = this.props;
 
@@ -31,7 +40,7 @@ class SelectableInput extends Component {
 
     renderCheckboxInput() {
         const {
-            id, name, value, formRef, checked, disabled
+            id, name, value, formRef, checked, disabled, label
         } = this.props;
 
         return (
@@ -49,7 +58,7 @@ class SelectableInput extends Component {
                   onKeyPress={ this.onKeyPress }
                   id={ id }
                 />
-                <label htmlFor={ id } />
+                <label htmlFor={ id }>{ label }</label>
             </>
         );
     }
@@ -104,7 +113,11 @@ class SelectableInput extends Component {
     render() {
         const { type } = this.props;
 
-        return this.renderSelectableInputOfType(type);
+        return (
+            <div block="SelectableInput" mods={ type }>
+                { this.renderSelectableInputOfType(type) }
+            </div>
+        );
     }
 }
 
@@ -118,6 +131,7 @@ SelectableInput.propTypes = {
     value: PropTypes.bool,
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
+    label: PropTypes.string,
     radioOptions: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string.isRequired,
@@ -145,6 +159,7 @@ SelectableInput.defaultProps = {
     disabled: false,
     formRef: null,
     radioOptions: [],
+    label: '',
     onChange: () => {},
     onClick: () => {},
     onFocus: () => {},

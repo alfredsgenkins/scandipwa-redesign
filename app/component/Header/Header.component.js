@@ -197,7 +197,7 @@ Header.propTypes = {
     navigationButtonState: PropTypes.oneOf([
         NAVIGATION_BACK,
         NAVIGATION_CLOSE,
-        NAVIGATION_CLOSE,
+        NAVIGATION_BOTH,
         NAVIGATION_NONE
     ]),
     isSearchVisible: PropTypes.bool

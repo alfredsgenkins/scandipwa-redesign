@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MenuOverlay from 'Component/MenuOverlay';
+import SearchOverlay from 'Component/SearchOverlay';
 import './Header.style';
 
 export const PDP = 'pdp';
@@ -9,6 +10,7 @@ export const CUSTOMER_ACCOUNT = 'customer_account';
 export const HOME_PAGE = 'home';
 export const MENU = 'menu';
 export const MENU_SUBCATEGORY = 'menu_subcategory';
+export const SEARCH = 'search';
 
 export const NAVIGATION_BACK = 'back';
 export const NAVIGATION_CLOSE = 'close';
@@ -48,12 +50,18 @@ class Header extends Component {
             [MENU_SUBCATEGORY]: {
                 back: true,
                 title: true
+            },
+            [SEARCH]: {
+                back: true,
+                search: true
             }
         };
 
         this.onBackButtonClick = this.onBackButtonClick.bind(this);
         this.onCloseButtonClick = this.onCloseButtonClick.bind(this);
         this.renderHeaderState = this.renderHeaderState.bind(this);
+        this.onSearchBarClick = this.onSearchBarClick.bind(this);
+        this.onMenuButtonClick = this.onMenuButtonClick.bind(this);
     }
 
     onBackButtonClick() {
@@ -71,6 +79,29 @@ class Header extends Component {
         if (onCloseClick) onCloseClick();
         goToPreviousHeaderState();
         hideActiveOverlay();
+    }
+
+    onSearchBarClick() {
+        const {
+            setHeaderState,
+            showOverlay,
+            headerState: { name }
+        } = this.props;
+
+        if (name !== SEARCH) {
+            showOverlay(SEARCH);
+            setHeaderState({
+                name: SEARCH,
+                onBackClick: () => showOverlay(MENU)
+            });
+        }
+    }
+
+    onMenuButtonClick() {
+        const { showOverlay, setHeaderState } = this.props;
+
+        showOverlay(MENU);
+        setHeaderState({ name: MENU });
     }
 
     renderBackButton(isVisible) {
@@ -98,28 +129,36 @@ class Header extends Component {
     }
 
     renderMenuButton(isVisible) {
-        const { showOverlay, setHeaderState } = this.props;
-
         return (
-            <button
-              block="Header"
-              elem="Button"
-              mods={ { isVisible, type: 'menu' } }
-              aria-label="Go to menu and search"
-              onClick={ () => showOverlay(MENU) && setHeaderState({ name: MENU }) }
-            />
+            <>
+                <button
+                  block="Header"
+                  elem="Button"
+                  mods={ { isVisible, type: 'menu' } }
+                  aria-label="Go to menu and search"
+                  onClick={ this.onMenuButtonClick }
+                />
+                <MenuOverlay />
+            </>
         );
     }
 
     renderSearchField(isVisible) {
         return (
-            <input
-              placeholder="Search"
-              aria-label="Search field"
-              block="Header"
-              elem="SearchField"
-              mods={ { isVisible, type: 'searchField' } }
-            />
+            <>
+                <input
+                  placeholder="Search"
+                  aria-label="Search field"
+                  block="Header"
+                  elem="SearchField"
+                  onClick={ this.onSearchBarClick }
+                  mods={ {
+                      isVisible,
+                      type: 'searchField'
+                  } }
+                />
+                <SearchOverlay />
+            </>
         );
     }
 
@@ -196,7 +235,6 @@ class Header extends Component {
                 <nav block="Header" elem="Nav">
                     { this.renderHeaderState(name) }
                 </nav>
-                <MenuOverlay />
             </header>
         );
     }

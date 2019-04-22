@@ -37,10 +37,10 @@
 	}
 
 	&::before {
-		width: 12px;
+		width: 18px;
 		height: 1px;
 		top: 16px;
-		right: 14px;
+		right: 8px;
 		background-color: var(--header-color);
 	}
 
@@ -163,6 +163,11 @@
 	}
 }
 
+@keyframes search-bar-grow {
+	from { flex-grow: 1; }
+	to { flex-grow: 0; }
+}
+
 .Header {
 	position: fixed;
 	top: 0;
@@ -227,20 +232,25 @@
 	}
 
 	&-SearchField {
-		width: 0;
 		min-width: 0;
 		opacity: 0;
 		background-color: var(--header-search-field-background);
 		font-size: 0.725rem;
-		transition-property: width, max-width, opacity, min-width;
+		transition-property: max-width, opacity;
 		transition-duration: 200ms;
-		will-change: width, max-width, opacity, min-width;
+		will-change: max-width, opacity;
+		max-width: 0;
 
 		&_isVisible {
-			width: 100%;
 			opacity: 1;
 			margin-left: 10px;
+			flex-grow: 1;
 			transition-delay: 200ms;
+			max-width: 100%;
+
+			~ .Header-Mock {
+				animation: search-bar-grow 1ms 200ms forwards;
+			}
 
 			padding: {
 				top: 6px;

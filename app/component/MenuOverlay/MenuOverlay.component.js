@@ -25,7 +25,6 @@ class MenuOverlay extends Component {
     render() {
         const { activeSubcategory } = this.state;
 
-        console.log(activeSubcategory);
         return (
             <Overlay
               id="menu"

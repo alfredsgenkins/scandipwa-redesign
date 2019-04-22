@@ -4,7 +4,8 @@ import {
 } from './Overlay.action';
 
 const initialState = {
-    activeOverlay: ''
+    activeOverlay: '',
+    areOtherOverlaysOpen: false
 };
 
 const OverlayReducer = (state = initialState, action) => {
@@ -13,16 +14,19 @@ const OverlayReducer = (state = initialState, action) => {
         const { overlayKey } = action;
         const { activeOverlay: prevActiveOverlay } = state;
         const activeOverlay = prevActiveOverlay === overlayKey ? '' : overlayKey;
+        const areOtherOverlaysOpen = prevActiveOverlay !== '';
 
         return {
             ...state,
-            activeOverlay
+            activeOverlay,
+            areOtherOverlaysOpen
         };
 
     case HIDE_ACTIVE_OVERLAY:
         return {
             ...state,
-            activeOverlay: ''
+            activeOverlay: '',
+            areOtherOverlaysOpen: false
         };
 
     default:

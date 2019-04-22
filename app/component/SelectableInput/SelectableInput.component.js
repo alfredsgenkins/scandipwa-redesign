@@ -76,7 +76,7 @@ class SelectableInput extends Component {
                     } = radio;
 
                     return (
-                        <>
+                        <React.Fragment key={ id }>
                             <input
                               ref={ formRef }
                               type="radio"
@@ -90,21 +90,20 @@ class SelectableInput extends Component {
                               onKeyPress={ this.onKeyPress }
                             />
                             <label htmlFor={ id }>{ label }</label>
-                        </>
+                        </React.Fragment>
                     );
                 }) }
             </fieldset>
         );
     }
 
+    /* eslint-disable consistent-return */
     renderSelectableInputOfType(type) {
         switch (type) {
         case RADIO_TYPE:
-            this.renderRadioButtons();
-            break;
+            return this.renderRadioButtons();
         case CHECKBOX_TYPE:
-            this.renderCheckboxInput();
-            break;
+            return this.renderCheckboxInput();
         default:
             break;
         }
@@ -114,7 +113,7 @@ class SelectableInput extends Component {
         const { type } = this.props;
 
         return (
-            <div block="SelectableInput" mods={ type }>
+            <div block="SelectableInput" mods={ { type } }>
                 { this.renderSelectableInputOfType(type) }
             </div>
         );
@@ -122,7 +121,7 @@ class SelectableInput extends Component {
 }
 
 SelectableInput.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     type: PropTypes.oneOf([
         RADIO_TYPE,
         CHECKBOX_TYPE
@@ -135,7 +134,7 @@ SelectableInput.propTypes = {
     radioOptions: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string.isRequired,
-            name: PropTypes.string,
+            name: PropTypes.string.isRequired,
             checked: PropTypes.bool,
             disabled: PropTypes.bool,
             value: PropTypes.string.isRequired,
@@ -153,6 +152,7 @@ SelectableInput.propTypes = {
 };
 
 SelectableInput.defaultProps = {
+    id: '',
     name: '',
     value: false,
     checked: false,

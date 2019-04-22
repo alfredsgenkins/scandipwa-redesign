@@ -252,24 +252,18 @@ Header.propTypes = {
             CUSTOMER_ACCOUNT,
             HOME_PAGE,
             MENU,
-            MENU_SUBCATEGORY
+            MENU_SUBCATEGORY,
+            SEARCH
         ]),
         title: PropTypes.string,
         onBackClick: PropTypes.func,
         onCloseClick: PropTypes.func
     }).isRequired,
-    cartItemQuantity: PropTypes.number,
-    navigationButtonState: PropTypes.oneOf([
-        NAVIGATION_BACK,
-        NAVIGATION_CLOSE,
-        NAVIGATION_BOTH,
-        NAVIGATION_NONE
-    ])
+    cartItemQuantity: PropTypes.number
 };
 
 Header.defaultProps = {
-    cartItemQuantity: 0,
-    navigationButtonState: NAVIGATION_NONE
+    cartItemQuantity: 0
 };
 
 export default Header;

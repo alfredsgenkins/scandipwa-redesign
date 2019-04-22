@@ -1,0 +1,154 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+export const RADIO_TYPE = 'radio';
+export const CHECKBOX_TYPE = 'checkbox';
+
+class SelectableInput extends Component {
+    onChange(event) {
+        const { onChange } = this.props;
+
+        if (onChange) onChange(event);
+    }
+
+    onFocus(event) {
+        const { onFocus } = this.props;
+
+        if (onFocus) onFocus(event);
+    }
+
+    onClick(event) {
+        const { onClick } = this.props;
+
+        if (onClick) onClick(event);
+    }
+
+    onKeyPress(event) {
+        const { onKeyPress } = this.props;
+
+        if (onKeyPress) onKeyPress(event);
+    }
+
+    renderCheckboxInput() {
+        const {
+            id, name, value, formRef, checked, disabled
+        } = this.props;
+
+        return (
+            <>
+                <input
+                  ref={ formRef }
+                  type="checkbox"
+                  checked={ checked }
+                  disabled={ disabled }
+                  name={ name }
+                  value={ value }
+                  onChange={ this.onChange }
+                  onFocus={ this.onFocus }
+                  onClick={ this.onClick }
+                  onKeyPress={ this.onKeyPress }
+                  id={ id }
+                />
+                <label htmlFor={ id } />
+            </>
+        );
+    }
+
+    renderRadioButtons() {
+        const {
+            formRef, radioOptions
+        } = this.props;
+
+        return (
+            <fieldset onChange={ this.onChange }>
+                { radioOptions.map((radio) => {
+                    const {
+                        id, name, value, disabled, checked, label
+                    } = radio;
+
+                    return (
+                        <>
+                            <input
+                              ref={ formRef }
+                              type="radio"
+                              id={ id }
+                              name={ name }
+                              value={ value }
+                              disabled={ disabled }
+                              checked={ checked }
+                              onFocus={ this.onFocus }
+                              onClick={ this.onClick }
+                              onKeyPress={ this.onKeyPress }
+                            />
+                            <label htmlFor={ id }>{ label }</label>
+                        </>
+                    );
+                }) }
+            </fieldset>
+        );
+    }
+
+    renderSelectableInputOfType(type) {
+        switch (type) {
+        case RADIO_TYPE:
+            this.renderRadioButtons();
+            break;
+        case CHECKBOX_TYPE:
+            this.renderCheckboxInput();
+            break;
+        default:
+            break;
+        }
+    }
+
+    render() {
+        const { type } = this.props;
+
+        return this.renderSelectableInputOfType(type);
+    }
+}
+
+SelectableInput.propTypes = {
+    id: PropTypes.string.isRequired,
+    type: PropTypes.oneOf([
+        RADIO_TYPE,
+        CHECKBOX_TYPE
+    ]).isRequired,
+    name: PropTypes.string,
+    value: PropTypes.bool,
+    checked: PropTypes.bool,
+    disabled: PropTypes.bool,
+    radioOptions: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string,
+            checked: PropTypes.bool,
+            disabled: PropTypes.bool,
+            value: PropTypes.string.isRequired,
+            label: PropTypes.string
+        })
+    ),
+    formRef: PropTypes.oneOfType([
+        PropTypes.func,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ]),
+    onChange: PropTypes.func,
+    onClick: PropTypes.func,
+    onFocus: PropTypes.func,
+    onKeyPress: PropTypes.func
+};
+
+SelectableInput.defaultProps = {
+    name: '',
+    value: false,
+    checked: false,
+    disabled: false,
+    formRef: null,
+    radioOptions: [],
+    onChange: () => {},
+    onClick: () => {},
+    onFocus: () => {},
+    onKeyPress: () => {}
+};
+
+export default SelectableInput;

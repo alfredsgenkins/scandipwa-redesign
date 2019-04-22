@@ -1,15 +1,15 @@
 import {
-    SHOW_OVERLAY,
+    TOGGLE_OVERLAY,
     HIDE_ACTIVE_OVERLAY,
-    showOverlayByKey,
+    toggleOverlayByKey,
     hideActiveOverlay
 } from './Overlay.action';
 import OverlayReducer from './Overlay.reducer';
 
 export {
-    SHOW_OVERLAY,
+    TOGGLE_OVERLAY,
     HIDE_ACTIVE_OVERLAY,
-    showOverlayByKey,
+    toggleOverlayByKey,
     hideActiveOverlay,
     OverlayReducer
 }

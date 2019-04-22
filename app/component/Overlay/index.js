@@ -1,3 +1,3 @@
-import Overlay from './Overlay.component';
+import Overlay from './Overlay.connect';
 
 export default Overlay;

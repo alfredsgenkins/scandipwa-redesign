@@ -1,26 +1,28 @@
 import {
-    SHOW_OVERLAY,
+    TOGGLE_OVERLAY,
     HIDE_ACTIVE_OVERLAY
 } from './Overlay.action';
 
 const initialState = {
-    activeOverlay: null
+    activeOverlay: ''
 };
 
 const OverlayReducer = (state = initialState, action) => {
     switch (action.type) {
-    case SHOW_OVERLAY:
+    case TOGGLE_OVERLAY:
         const { overlayKey } = action;
+        const { activeOverlay: prevActiveOverlay } = state;
+        const activeOverlay = prevActiveOverlay === overlayKey ? '' : overlayKey;
 
         return {
             ...state,
-            activeOverlay: overlayKey
+            activeOverlay
         };
 
     case HIDE_ACTIVE_OVERLAY:
         return {
             ...state,
-            activeOverlay: null
+            activeOverlay: ''
         };
 
     default:

@@ -1,21 +1,42 @@
 import { HOME_PAGE } from 'Component/Header';
 import {
-    CHANGE_HEADER_STATE
+    CHANGE_HEADER_STATE,
+    GOTO_PREVIOUS_HEADER_STATE
 } from './Header.action';
 
 const initialState = {
-    headerStateName: HOME_PAGE
+    headerState: {
+        name: HOME_PAGE
+    },
+    headerStateHistory: [
+        { name: HOME_PAGE }
+    ]
 };
 
 const HeaderReducer = (state = initialState, action) => {
+    const { headerState } = action;
+    const { headerStateHistory } = state;
+
     switch (action.type) {
     case CHANGE_HEADER_STATE:
-        const { headerStateName } = action;
+        headerStateHistory.push(headerState);
 
         return {
             ...state,
-            headerStateName
+            headerStateHistory,
+            headerState
         };
+
+    case GOTO_PREVIOUS_HEADER_STATE:
+        headerStateHistory.pop();
+        const newHeaderState = headerStateHistory.slice(-1)[0];
+
+        return {
+            ...state,
+            headerStateHistory,
+            headerState: newHeaderState
+        };
+
     default:
         return state;
     }

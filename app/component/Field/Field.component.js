@@ -350,7 +350,10 @@ Field.propTypes = {
             name: PropTypes.string.isRequired,
             checked: PropTypes.bool,
             disabled: PropTypes.bool,
-            value: PropTypes.string.isRequired,
+            value: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number
+            ]).isRequired,
             label: PropTypes.string
         })
     ),

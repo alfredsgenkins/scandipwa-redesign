@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { isSignedIn } from 'Util/Auth';
 import './MyAccountOverlay.style';
@@ -30,9 +31,9 @@ class MyAccountOverlay extends Component {
         };
 
         this.handleForgotPassword = this.handleForgotPassword.bind(this);
+        this.handleForgotPasswordSuccess = this.handleForgotPasswordSuccess.bind(this);
         this.handleCreateAccount = this.handleCreateAccount.bind(this);
         this.handleSignIn = this.handleSignIn.bind(this);
-        this.logout = this.logout.bind(this);
     }
     /* eslint-disable-next-line */
     componentDidUpdate() {
@@ -58,19 +59,19 @@ class MyAccountOverlay extends Component {
     }
 
     handleForgotPassword() {
-        return;
+        this.setState({ state: STATE_FORGOT_PASSWORD });
+    }
+
+    handleForgotPasswordSuccess() {
+        this.setState({ state: STATE_FORGOT_PASSWORD_SUCCESS });
     }
 
     handleSignIn() {
-        return;
+        this.setState({ state: STATE_SIGN_IN });
     }
 
     handleCreateAccount() {
-        return;
-    }
-
-    logout() {
-        return;
+        this.setState({ state: STATE_CREATE_ACCOUNT });
     }
 
     renderMyAccount() {
@@ -135,7 +136,9 @@ class MyAccountOverlay extends Component {
                 >
                     <Field type="text" id="email" label="Email" validation={ ['notEmpty', 'email'] } />
                     <div block="MyAccountOverlay" elem="Buttons">
-                        <button block="Button" type="submit">Reset password</button>
+                        <button block="Button" type="submit" onClick={ this.handleForgotPasswordSuccess }>
+                            Reset password
+                        </button>
                     </div>
                 </Form>
                 <article block="MyAccountOverlay" elem="Additional" mods={ { state } }>
@@ -179,6 +182,7 @@ class MyAccountOverlay extends Component {
                 </h4>
                 <button
                   block="Button"
+                  onClick={ this.handleSignIn }
                 >
                     Got it
                 </button>
@@ -208,7 +212,9 @@ class MyAccountOverlay extends Component {
                         />
                     </fieldset>
                     <fieldset block="MyAccountOverlay" elem="Legend">
-                        <legend block="MyAccountOverlay" elem="Legend" mods={ { type: 'signUp' } }>Sign-Up Information</legend>
+                        <legend block="MyAccountOverlay" elem="Legend" mods={ { type: 'signUp' } }>
+                            Sign-Up Information
+                        </legend>
                         <Field type="text" label="Email" id="email" validation={ ['notEmpty', 'email'] } />
                         <Field
                           type="password"
@@ -291,5 +297,11 @@ class MyAccountOverlay extends Component {
         );
     }
 }
+
+MyAccountOverlay.propTypes = {
+    logout: PropTypes.func.isRequired,
+    isOverlayVisible: PropTypes.bool.isRequired,
+    setHeaderState: PropTypes.func.isRequired
+};
 
 export default MyAccountOverlay;

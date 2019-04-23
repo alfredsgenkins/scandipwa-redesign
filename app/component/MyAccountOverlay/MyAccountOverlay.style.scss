@@ -17,6 +17,10 @@
   justify-self: flex-end;
   grid-column: 3;
 
+  button {
+      width: 100%;
+  }
+
   &:focus,
   &:focus-within,
   &:hover {
@@ -199,7 +203,11 @@
 
   &-Action form,
   &-Additional {
-      padding: 2rem;
+      padding: {
+          top: 0;
+          left: 2rem;
+          right: 2rem;
+      };
   }
 
   &-Action {
@@ -237,6 +245,7 @@
       h4 {
           font-weight: normal;
           margin-bottom: .5rem;
+          text-align: center;
       }
 
       h3 {
@@ -245,19 +254,11 @@
   }
 
   &-Additional {
-      background-color: var(--myAccountOverlay-article-color);
-
-      section {
-          margin-bottom: 2rem;
-
-          &:last-child {
-              margin-bottom: 0;
-          }
-      }
+    padding-top: 5rem;
   }
 
   &-Buttons {
-      margin-top: 2rem;
+      margin-top: 0.5rem;
   }
 
   &-Checkbox {

@@ -226,7 +226,6 @@ class MyAccountOverlay extends Component {
                   onSubmitSuccess={ fields => this.onSignInSuccess(fields) }
                   onSubmitError={ () => this.onFormError() }
                 >
-                    <h3>Sign in to your account</h3>
                     <Field
                       type="text"
                       label="Login or Email"
@@ -242,26 +241,23 @@ class MyAccountOverlay extends Component {
                     <div block="MyAccountOverlay" elem="Buttons">
                         <button>Sign in</button>
                     </div>
+                    <button
+                      block="Button"
+                      elem="ForgotPassword"
+                      onClick={ this.handleForgotPassword }
+                    >
+                        Forgot password?
+                    </button>
                 </Form>
                 <article block="MyAccountOverlay" elem="Additional">
-                    <section aria-labelledby="forgot-password-labe">
-                        <h4 id="forgot-password-label">Forgot password?</h4>
-                        <button
-                          block="Button"
-                          mods={ { likeLink: true } }
-                          onClick={ this.handleForgotPassword }
-                        >
-                            Get a password reset link
-                        </button>
-                    </section>
-                    <section aria-labelledby="create-account-label">
-                        <h4 id="create-account-label">Don&apos;t have an account?</h4>
+                    <section aria-label="new to ScandiPWA?">
+                        <h4 id="forgot-password-label">New to ScandiPWA?</h4>
                         <button
                           block="Button"
                           mods={ { likeLink: true } }
                           onClick={ this.handleCreateAccount }
                         >
-                            Create an account
+                            Create new account
                         </button>
                     </section>
                 </article>

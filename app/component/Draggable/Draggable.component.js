@@ -94,7 +94,7 @@ class Draggable extends Component {
             translateY: clientY - originalY + lastTranslateY
         }), () => {
             const { onDrag } = this.props;
-            if (onDrag) onDrag({ translateX, translateY });
+            if (onDrag) onDrag({ ...this.state, clientY, clientX });
         });
     }
 

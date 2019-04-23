@@ -81,6 +81,12 @@ module.exports = {
                         options: {
                             sourceMap: true
                         }
+                    },
+                    {
+                        loader: 'sass-resources-loader',
+                        options: {
+                            resources: path.resolve(projectRoot, 'app', 'style', 'abstract', '_abstract.scss')
+                        }
                     }
                 ]
             },

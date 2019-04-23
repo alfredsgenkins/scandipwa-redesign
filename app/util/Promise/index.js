@@ -9,11 +9,6 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-blockquote {
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    padding: .5rem 1.25rem 0 1.2rem;
-    border-left: 1px solid var(--color-neutral-base);
-    color: var(--color-neutral-base);
-    font-size: 1.3rem;
-}
+import makeCancelable from './MakeCancelable';
+
+export { makeCancelable };

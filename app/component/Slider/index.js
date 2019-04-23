@@ -9,7 +9,6 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-.Button,
-button {
-    @extend %button;
-}
+import Slider from './Slider.component';
+
+export default Slider;

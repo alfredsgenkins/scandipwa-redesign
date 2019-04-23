@@ -30,7 +30,12 @@ const plugins = [
             root: './',
             alias: {
                 Style: './app/style/',
-                Component: './app/component/'
+                Component: './app/component/',
+                Route: './app/route/',
+                Store: './app/store/',
+                Util: './app/util/',
+                Query: './app/query/',
+                Type: './app/type/'
             }
         }
     ],

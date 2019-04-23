@@ -1,0 +1,39 @@
+:root {
+    --overlay-background: #fff;
+}
+
+@keyframes move-in-front {
+    from { z-index: -1; }
+    to { z-index: 10; }
+}
+
+.Overlay {
+    pointer-events: none;
+    z-index: -1;
+
+    background-color: var(--overlay-background);
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: scroll;
+    padding: 1rem;
+    max-width: 100%;
+    overflow-x: hidden;
+
+    transform: translate3d(0, -100%, 0);
+    transition: transform 200ms ease-in;
+    will-change: transform;
+
+    &_isInstant {
+        transition: none;
+    }
+
+    &_isVisible {
+        pointer-events: all;
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+        animation: move-in-front 200ms 0 forwards;
+    }
+}

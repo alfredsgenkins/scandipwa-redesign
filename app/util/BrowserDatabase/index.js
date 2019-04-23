@@ -9,13 +9,6 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-select {
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: var(--color-breadcrumbs-current);
-    padding: .8rem 1.5rem;
-    background-size: 16%;
-    background-color: var(--color-breadcrumbs-background);
-    border-radius: 0;
-    appearance: none;
-}
+import BrowserDatabase from './BrowserDatabase';
+
+export default BrowserDatabase;

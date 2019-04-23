@@ -9,5 +9,6 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-@import "./abstract/abstract";
-@import "./base/reset";
+import CSS from './CSS';
+
+export default CSS;

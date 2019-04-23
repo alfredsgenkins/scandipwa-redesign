@@ -9,19 +9,10 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
-li {
-    padding-left: 3.25rem;
+import {
+    getProductPrice
+} from './Price';
 
-    &::before {
-        position: absolute;
-        left: 1em;
-        top: .07em;
-        content: "\2022";
-        color: color(primary, base);
-        padding-right: 1.1225em;
-
-        ol & {
-            content: counter(list) ".";
-        }
-    }
-}
+export {
+    getProductPrice
+};

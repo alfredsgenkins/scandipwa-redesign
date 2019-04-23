@@ -18,6 +18,12 @@ import './Select.style';
  * @class Select
  */
 class Select extends Component {
+    constructor(props) {
+        super(props);
+
+        this.onChange = this.onChange.bind(this);
+    }
+
     /**
      * Handle Sort key change
      * @param {Object} option
@@ -26,7 +32,13 @@ class Select extends Component {
     onGetSortKey(key) {
         const { onGetSortKey } = this.props;
 
-        onGetSortKey(key);
+        if (onGetSortKey) onGetSortKey(key);
+    }
+
+    onChange(event) {
+        const { value } = event.target;
+
+        this.onGetSortKey(value);
     }
 
     /**
@@ -43,7 +55,7 @@ class Select extends Component {
               onClick={ () => this.onGetSortKey(option.value) }
               onKeyPress={ () => this.onGetSortKey(option.value) }
             >
-            {option.label}
+                { option.label }
             </li>
         ));
     }
@@ -67,7 +79,6 @@ class Select extends Component {
     }
 
     render() {
-        // TODO add select as possible child type name in form component
         const { selectedOption, formRef } = this.props;
 
         return (
@@ -79,7 +90,7 @@ class Select extends Component {
                           elem="Form"
                           ref={ formRef }
                           value={ selectedOption }
-                          onChange={ e => this.onGetSortKey(e.target.value) }
+                          onChange={ this.onChange }
                         >
                             { this.renderOptions() }
                         </select>

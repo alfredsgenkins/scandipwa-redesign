@@ -223,19 +223,22 @@ class Field extends Component {
         } = this.props;
 
         return (
-            <input
-              ref={ formRef }
-              id={ id }
-              type="checkbox"
-              checked={ checked }
-              disabled={ disabled }
-              name={ name }
-              value={ value }
-              onChange={ this.onChange }
-              onFocus={ this.onFocus }
-              onClick={ this.onClick }
-              onKeyPress={ this.onKeyPress }
-            />
+            <>
+                <input
+                  ref={ formRef }
+                  id={ id }
+                  type="checkbox"
+                  checked={ checked }
+                  disabled={ disabled }
+                  name={ name }
+                  value={ value }
+                  onChange={ this.onChange }
+                  onFocus={ this.onFocus }
+                  onClick={ this.onClick }
+                  onKeyPress={ this.onKeyPress }
+                />
+                <label htmlFor={ id } />
+            </>
         );
     }
 
@@ -250,7 +253,8 @@ class Field extends Component {
                     } = radio;
 
                     return (
-                        <label htmlFor={ id } key={ id }>
+                        <React.Fragment key={ id }>
+                            <label htmlFor={ id }>
                             <input
                               ref={ formRef }
                               type="radio"
@@ -263,8 +267,10 @@ class Field extends Component {
                               onClick={ this.onClick }
                               onKeyPress={ this.onKeyPress }
                             />
-                            { label }
-                        </label>
+                            <label htmlFor={ id } />
+                                { label }
+                            </label>
+                        </React.Fragment>
                     );
                 }) }
             </fieldset>

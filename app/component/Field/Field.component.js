@@ -249,25 +249,25 @@ class Field extends Component {
             <fieldset onChange={ this.onChange } id={ id }>
                 { radioOptions.map((radio) => {
                     const {
-                        id, name, value, disabled, checked, label
+                        id: radioId, name, value, disabled, checked, label
                     } = radio;
 
                     return (
-                        <React.Fragment key={ id }>
-                            <label htmlFor={ id }>
-                            <input
-                              ref={ formRef }
-                              type="radio"
-                              id={ id }
-                              name={ name }
-                              value={ value }
-                              disabled={ disabled }
-                              checked={ checked }
-                              onFocus={ this.onFocus }
-                              onClick={ this.onClick }
-                              onKeyPress={ this.onKeyPress }
-                            />
-                            <label htmlFor={ id } />
+                        <React.Fragment key={ radioId }>
+                            <label htmlFor={ radioId }>
+                                <input
+                                  ref={ formRef }
+                                  type="radio"
+                                  id={ radioId }
+                                  name={ name }
+                                  value={ value }
+                                  disabled={ disabled }
+                                  checked={ checked }
+                                  onFocus={ this.onFocus }
+                                  onClick={ this.onClick }
+                                  onKeyPress={ this.onKeyPress }
+                                />
+                                <label htmlFor={ radioId } />
                                 { label }
                             </label>
                         </React.Fragment>

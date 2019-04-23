@@ -35,7 +35,8 @@ class MyAccountOverlay extends Component {
     /* eslint-disable-next-line */
     componentDidUpdate() {
         const { isOverlayVisible, setHeaderState } = this.props;
-        const { state } = this.state;
+        // const { state } = this.state;
+        const state = STATE_FORGOT_PASSWORD;
 
         if (isOverlayVisible) {
             switch (state) {
@@ -71,7 +72,8 @@ class MyAccountOverlay extends Component {
 
     renderMyAccount() {
         const { isOverlayVisible: isVisible } = this.props;
-        const { state } = this.state;
+        // const { state } = this.state;
+        const state = STATE_FORGOT_PASSWORD;
         const renderFunction = this.renderMap[state];
 
         return (
@@ -119,7 +121,8 @@ class MyAccountOverlay extends Component {
     }
 
     renderForgotPassword() {
-        const { state } = this.state;
+        // const { state } = this.state;
+        const state = STATE_FORGOT_PASSWORD;
 
         return (
             <>
@@ -129,9 +132,9 @@ class MyAccountOverlay extends Component {
                   onSubmitSuccess={ fields => this.onForgotPasswordSuccess(fields) }
                   onSubmitError={ () => this.onFormError() }
                 >
-                    <Field type="text" id="email" placeholder="Email or login" validation={ ['notEmpty', 'email'] } />
+                    <Field type="text" id="email" label="Email" validation={ ['notEmpty', 'email'] } />
                     <div block="MyAccountOverlay" elem="Buttons">
-                        <button type="submit">Reset password</button>
+                        <button block="Button" type="submit">Reset password</button>
                     </div>
                 </Form>
                 <article block="MyAccountOverlay" elem="Additional" mods={ { state } }>
@@ -171,8 +174,8 @@ class MyAccountOverlay extends Component {
                 >
                     <fieldset block="MyAccountOverlay" elem="Legend">
                         <legend>Personal Information</legend>
-                        <Field type="text" label="First name" id="firstname" validation={ ['notEmpty'] } />
-                        <Field type="text" label="Last name" id="lastname" validation={ ['notEmpty'] } />
+                        <Field type="text" label="First Name" id="firstname" validation={ ['notEmpty'] } />
+                        <Field type="text" label="Last Name" id="lastname" validation={ ['notEmpty'] } />
                         <Field
                           block="MyAccountOverlay"
                           elem="Checkbox"
@@ -182,7 +185,7 @@ class MyAccountOverlay extends Component {
                         />
                     </fieldset>
                     <fieldset block="MyAccountOverlay" elem="Legend">
-                        <legend>Sign-Up Information</legend>
+                        <legend block="MyAccountOverlay" elem="Legend" mods={ { type: 'signUp' } }>Sign-Up Information</legend>
                         <Field type="text" label="Email" id="email" validation={ ['notEmpty', 'email'] } />
                         <Field
                           type="password"
@@ -198,7 +201,7 @@ class MyAccountOverlay extends Component {
                         />
                     </fieldset>
                     <div block="MyAccountOverlay" elem="Buttons">
-                        <button type="submit">Sign up</button>
+                        <button block="Button" type="submit">Sign up</button>
                     </div>
                 </Form>
             </>
@@ -218,7 +221,7 @@ class MyAccountOverlay extends Component {
                 >
                     <Field
                       type="text"
-                      label="Login or Email"
+                      label="Email or login"
                       id="email"
                       validation={ ['notEmpty', 'email'] }
                     />
@@ -229,11 +232,11 @@ class MyAccountOverlay extends Component {
                       validation={ ['notEmpty', 'password'] }
                     />
                     <div block="MyAccountOverlay" elem="Buttons">
-                        <button>Sign in</button>
+                        <button block="Button">Sign in</button>
                     </div>
                     <button
                       block="Button"
-                      elem="ForgotPassword"
+                      mods={ { likeLink: true } }
                       onClick={ this.handleForgotPassword }
                     >
                         Forgot password?
@@ -244,7 +247,6 @@ class MyAccountOverlay extends Component {
                         <h4 id="forgot-password-label">New to ScandiPWA?</h4>
                         <button
                           block="Button"
-                          mods={ { likeLink: true } }
                           onClick={ this.handleCreateAccount }
                         >
                             Create new account

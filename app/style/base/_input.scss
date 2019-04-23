@@ -9,14 +9,18 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
+ :root {
+     --input-border-color: #e0e0e0;
+ }
+
  input,
  textarea {
      --input-color: #{color(primary, base, true)};
-     --input-border-color: #{color(neutral, base, true)};
  
      border: 1px solid var(--input-border-color);
      background-color: var(--color-footer-light);
      padding: 1.1rem 1.9rem;
+     height: 40px;
      appearance: none;
  
      &:focus {

@@ -9,13 +9,18 @@
  * @link https://github.com/scandipwa/base-theme
  */
 
+ :root {
+     --field-label-color: #6e6e6e;
+ }
+
  .Field {
     margin-top: 1rem;
 
     label {
+        color: var(--field-label-color);
         padding-bottom: .3rem;
-        font-weight: 700;
-        font-size: 1.05rem;
+        font-weight: 300;
+        font-size: 0.715rem;
     }
 
     &-Message {

@@ -1,9 +1,13 @@
-%button {
+:root {
+    --button-background: #f26323;
+    --button-color: #ffffff;
+}
+
+.Button {
     text-decoration: none !important; // because we never need underlines in buttons
 
     border-radius: 0;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 0.85rem;
     text-transform: uppercase;
     padding: var(--button-padding);
     color: var(--button-color);
@@ -12,11 +16,7 @@
     transition-timing-function: ease-out;
     transition-duration: .25s;
     cursor: pointer;
-    border: {
-      width: var(--button-border-width);
-      style: solid;
-      color: var(--button-border);
-    }
+    height: 40px;
 
     &:not([disabled]) {
         &:hover,
@@ -43,5 +43,12 @@
     + button,
     + .Button {
         margin-left: 1rem;
+    }
+
+    &_likeLink {
+        background-color: transparent;
+        color: var(--button-background);
+        text-transform: none;
+        text-align: start;
     }
 }

@@ -11,8 +11,6 @@
 
 import React, { Component } from 'react';
 import DragBar from 'Component/DragBar/DragBar.component';
-import Form from 'Component/Form';
-import Field from 'Component/Field';
 import './ProductPage.style';
 
 class ProductPage extends Component {
@@ -20,25 +18,6 @@ class ProductPage extends Component {
         return (
             <main block="ProductPage">
                 <DragBar />
-                <Form>
-                    <Field
-                      type="radio"
-                      id="1"
-                      label="hello"
-                      radioOptions={ [
-                          {
-                              id: '2',
-                              name: 'r',
-                              value: 'xd',
-                              label: 'xd'
-                          }
-                      ] }
-                    />
-                    <Field
-                      type="checkbox"
-                      id="2"
-                    />
-                </Form>
             </main>
         );
     }

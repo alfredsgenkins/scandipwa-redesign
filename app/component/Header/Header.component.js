@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MenuOverlay from 'Component/MenuOverlay';
 import SearchOverlay from 'Component/SearchOverlay';
+import MyAccountOverlay from 'Component/MyAccountOverlay';
 import './Header.style';
 
 export const PDP = 'pdp';
@@ -34,7 +35,7 @@ class Header extends Component {
                 minicart: true
             },
             [CUSTOMER_ACCOUNT]: {
-                navigation: true,
+                close: true,
                 title: true
             },
             [HOME_PAGE]: {
@@ -62,6 +63,7 @@ class Header extends Component {
         this.renderHeaderState = this.renderHeaderState.bind(this);
         this.onSearchBarClick = this.onSearchBarClick.bind(this);
         this.onMenuButtonClick = this.onMenuButtonClick.bind(this);
+        this.onMyAccountButtonClick = this.onMyAccountButtonClick.bind(this);
     }
 
     onBackButtonClick() {
@@ -102,6 +104,12 @@ class Header extends Component {
 
         showOverlay(MENU);
         setHeaderState({ name: MENU });
+    }
+
+    onMyAccountButtonClick() {
+        const { showOverlay } = this.props;
+
+        showOverlay(CUSTOMER_ACCOUNT);
     }
 
     renderBackButton(isVisible) {
@@ -175,12 +183,16 @@ class Header extends Component {
 
     renderAccountButton(isVisible) {
         return (
-            <button
-              block="Header"
-              elem="Button"
-              mods={ { isVisible, type: 'account' } }
-              aria-label="My account"
-            />
+            <>
+                <button
+                  block="Header"
+                  elem="Button"
+                  mods={ { isVisible, type: 'account' } }
+                  aria-label="My account"
+                  onClick={ this.onMyAccountButtonClick }
+                />
+                <MyAccountOverlay />
+            </>
         );
     }
 

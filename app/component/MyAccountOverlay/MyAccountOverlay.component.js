@@ -9,6 +9,7 @@ import { CUSTOMER_ACCOUNT } from '../Header/Header.component';
 
 const STATE_SIGN_IN = 'signIn';
 const STATE_FORGOT_PASSWORD = 'forgotPassword';
+const STATE_FORGOT_PASSWORD_SUCCESS = 'forgotPasswordSuccess';
 const STATE_CREATE_ACCOUNT = 'createAccount';
 const STATE_LOGGED_IN = 'loggedIn';
 
@@ -23,6 +24,7 @@ class MyAccountOverlay extends Component {
         this.renderMap = {
             [STATE_SIGN_IN]: () => this.renderSignIn(),
             [STATE_FORGOT_PASSWORD]: () => this.renderForgotPassword(),
+            [STATE_FORGOT_PASSWORD_SUCCESS]: () => this.renderForgotPasswordSuccess(),
             [STATE_CREATE_ACCOUNT]: () => this.renderCreateAccount(),
             [STATE_LOGGED_IN]: () => this.renderAccountActions()
         };
@@ -35,8 +37,7 @@ class MyAccountOverlay extends Component {
     /* eslint-disable-next-line */
     componentDidUpdate() {
         const { isOverlayVisible, setHeaderState } = this.props;
-        // const { state } = this.state;
-        const state = STATE_FORGOT_PASSWORD;
+        const { state } = this.state;
 
         if (isOverlayVisible) {
             switch (state) {
@@ -45,6 +46,8 @@ class MyAccountOverlay extends Component {
             case STATE_CREATE_ACCOUNT:
                 return setHeaderState({ name: CUSTOMER_ACCOUNT, title: 'Create new account' });
             case STATE_FORGOT_PASSWORD:
+                return setHeaderState({ name: CUSTOMER_ACCOUNT, title: 'Get password link' });
+            case STATE_FORGOT_PASSWORD_SUCCESS:
                 return setHeaderState({ name: CUSTOMER_ACCOUNT, title: 'Get password link' });
             case STATE_LOGGED_IN:
                 return setHeaderState({ name: CUSTOMER_ACCOUNT });
@@ -72,8 +75,7 @@ class MyAccountOverlay extends Component {
 
     renderMyAccount() {
         const { isOverlayVisible: isVisible } = this.props;
-        // const { state } = this.state;
-        const state = STATE_FORGOT_PASSWORD;
+        const { state } = this.state;
         const renderFunction = this.renderMap[state];
 
         return (
@@ -121,8 +123,7 @@ class MyAccountOverlay extends Component {
     }
 
     renderForgotPassword() {
-        // const { state } = this.state;
-        const state = STATE_FORGOT_PASSWORD;
+        const { state } = this.state;
 
         return (
             <>
@@ -160,6 +161,28 @@ class MyAccountOverlay extends Component {
                     </section>
                 </article>
             </>
+        );
+    }
+
+    renderForgotPasswordSuccess() {
+        const { state } = this.state;
+
+        return (
+            <article
+              aria-labelledby="forgot-password-success"
+              block="MyAccountOverlay"
+              elem="Additional"
+              mods={ { state } }
+            >
+                <h4 id="forgot-password-success">
+                    If there is an account associated with the provided address you will receive an email with a link to reset your password
+                </h4>
+                <button
+                  block="Button"
+                >
+                    Got it
+                </button>
+            </article>
         );
     }
 

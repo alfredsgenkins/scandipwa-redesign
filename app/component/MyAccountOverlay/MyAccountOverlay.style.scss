@@ -240,12 +240,28 @@
                   margin-bottom: 1rem;
               }
           }
+
+          &_forgotPassword {
+              h4 {
+                  font-size: 0.95rem;
+                  width: initial;
+              }
+
+              button {
+                  width: initial;
+              }
+          }
+
+          &_signIn {
+              h4 {
+                  text-align: center;
+              }
+          }
       }
 
       h4 {
           font-weight: normal;
           margin-bottom: .5rem;
-          text-align: center;
       }
 
       h3 {
@@ -255,6 +271,25 @@
 
   &-Additional {
     padding-top: 5rem;
+
+    &_state {
+        section {
+            display: flex;
+
+            &:first-of-type {
+                padding-top: 0;
+            }
+
+            padding-top: 20px;
+        }
+
+        &_signIn {
+            section {
+                flex-direction: column;
+            }
+        }
+    }
+
   }
 
   &-Buttons {

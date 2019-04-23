@@ -76,7 +76,7 @@ class MyAccountOverlay extends Component {
 
         return (
             <div block="MyAccountOverlay" mods={ { isVisible } }>
-                <div block="MyAccountOverlay" elem="Action">
+                <div block="MyAccountOverlay" elem="Action" mods={ { state } }>
                     {renderFunction()}
                 </div>
             </div>
@@ -119,6 +119,8 @@ class MyAccountOverlay extends Component {
     }
 
     renderForgotPassword() {
+        const { state } = this.state;
+
         return (
             <>
                 <Form
@@ -127,13 +129,12 @@ class MyAccountOverlay extends Component {
                   onSubmitSuccess={ fields => this.onForgotPasswordSuccess(fields) }
                   onSubmitError={ () => this.onFormError() }
                 >
-                    <h3>Get password reset link</h3>
-                    <Field type="text" label="Email" id="email" validation={['notEmpty', 'email']} />
+                    <Field type="text" id="email" placeholder="Email or login" validation={ ['notEmpty', 'email'] } />
                     <div block="MyAccountOverlay" elem="Buttons">
-                        <button type="submit">Send reset link</button>
+                        <button type="submit">Reset password</button>
                     </div>
                 </Form>
-                <article block="MyAccountOverlay" elem="Additional">
+                <article block="MyAccountOverlay" elem="Additional" mods={ { state } }>
                     <section aria-labelledby="forgot-password-labe">
                         <h4 id="forgot-password-label">Already have an account?</h4>
                         <button
@@ -168,7 +169,6 @@ class MyAccountOverlay extends Component {
                   onSubmitSuccess={ fields => this.onCreateAccountSuccess(fields) }
                   onSubmitError={ (fields, invalidFields) => this.onCreateAccountAttempt(fields, invalidFields) }
                 >
-                    <h3>Create your account</h3>
                     <fieldset block="MyAccountOverlay" elem="Legend">
                         <legend>Personal Information</legend>
                         <Field type="text" label="First name" id="firstname" validation={ ['notEmpty'] } />
@@ -201,23 +201,13 @@ class MyAccountOverlay extends Component {
                         <button type="submit">Sign up</button>
                     </div>
                 </Form>
-                <article block="MyAccountOverlay" elem="Additional">
-                    <section aria-labelledby="create-account-label">
-                        <h4 id="create-account-label">Already have an account?</h4>
-                        <button
-                          block="Button"
-                          mods={ { likeLink: true } }
-                          onClick={ this.handleSignIn }
-                        >
-                            Sign in here
-                        </button>
-                    </section>
-                </article>
             </>
         );
     }
 
     renderSignIn() {
+        const { state } = this.state;
+
         return (
             <>
                 <Form
@@ -249,7 +239,7 @@ class MyAccountOverlay extends Component {
                         Forgot password?
                     </button>
                 </Form>
-                <article block="MyAccountOverlay" elem="Additional">
+                <article block="MyAccountOverlay" elem="Additional" mods={ { state } }>
                     <section aria-label="new to ScandiPWA?">
                         <h4 id="forgot-password-label">New to ScandiPWA?</h4>
                         <button

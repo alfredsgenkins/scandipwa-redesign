@@ -35,6 +35,20 @@ class MyAccountOverlay extends Component {
         this.handleCreateAccount = this.handleCreateAccount.bind(this);
         this.handleSignIn = this.handleSignIn.bind(this);
     }
+
+    static getDerivedStateFromProps(props, state) {
+        const { isOverlayVisible } = props;
+
+        if (isOverlayVisible === false) {
+            return {
+                ...state,
+                state: isSignedIn() ? STATE_LOGGED_IN : STATE_SIGN_IN
+            };
+        }
+
+        return { ...state };
+    }
+
     /* eslint-disable-next-line */
     componentDidUpdate() {
         const { isOverlayVisible, setHeaderState } = this.props;
@@ -82,7 +96,7 @@ class MyAccountOverlay extends Component {
         return (
             <div block="MyAccountOverlay" mods={ { isVisible } }>
                 <div block="MyAccountOverlay" elem="Action" mods={ { state } }>
-                    {renderFunction()}
+                    { renderFunction() }
                 </div>
             </div>
         );

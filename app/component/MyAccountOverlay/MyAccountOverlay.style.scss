@@ -8,6 +8,10 @@
  * @package scandipwa/base-theme
  * @link https://github.com/scandipwa/base-theme
  */
+ 
+:root {
+    --checkbox-label-color: #0a0a0a;
+}
 
 .MyAccountOverlay {
     justify-self: flex-end;
@@ -205,10 +209,17 @@
 
   &-Checkbox {
       display: flex;
-      margin-bottom: 1rem;
+      flex-direction: row-reverse;
+      right: 14px;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 2rem;
 
-      label {
-          display: inline;
+      > label:first-of-type {
+          color: var(--checkbox-label-color);
+          font-size: 0.8rem;
+          font-weight: 500;
+          padding-bottom: 0;
       }
 
       input {

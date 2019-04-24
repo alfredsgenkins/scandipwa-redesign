@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { isSignedIn } from 'Util/Auth';
+import { NavLink } from 'react-router-dom';
 import MenuOverlay from 'Component/MenuOverlay';
 import SearchOverlay from 'Component/SearchOverlay';
 import MyAccountOverlay from 'Component/MyAccountOverlay';
@@ -182,18 +184,29 @@ class Header extends Component {
     }
 
     renderAccountButton(isVisible) {
-        return (
-            <>
-                <button
-                  block="Header"
-                  elem="Button"
-                  mods={ { isVisible, type: 'account' } }
-                  aria-label="My account"
-                  onClick={ this.onMyAccountButtonClick }
-                />
-                <MyAccountOverlay />
-            </>
-        );
+        return isSignedIn()
+            ? (
+                <NavLink to="my-account">
+                    <button
+                      block="Header"
+                      elem="Button"
+                      mods={ { isVisible, type: 'account' } }
+                      aria-label="My account"
+                    />
+                </NavLink>
+            )
+            : (
+                <>
+                    <button
+                      block="Header"
+                      elem="Button"
+                      mods={ { isVisible, type: 'account' } }
+                      aria-label="My account"
+                      onClick={ this.onMyAccountButtonClick }
+                    />
+                    <MyAccountOverlay />
+                </>
+            );
     }
 
     renderMinicartButton(isVisible) {

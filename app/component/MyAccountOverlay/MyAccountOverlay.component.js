@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { isSignedIn } from 'Util/Auth';
 import './MyAccountOverlay.style';
 import Overlay from 'Component/Overlay';
 import Form from 'Component/Form';
@@ -19,7 +18,7 @@ class MyAccountOverlay extends Component {
         super(props);
 
         this.state = {
-            state: isSignedIn() ? STATE_LOGGED_IN : STATE_SIGN_IN
+            state: STATE_SIGN_IN
         };
 
         this.renderMap = {
@@ -42,7 +41,7 @@ class MyAccountOverlay extends Component {
         if (isOverlayVisible === false) {
             return {
                 ...state,
-                state: isSignedIn() ? STATE_LOGGED_IN : STATE_SIGN_IN
+                state: STATE_SIGN_IN
             };
         }
 
@@ -104,7 +103,6 @@ class MyAccountOverlay extends Component {
 
     renderAccountActions() {
         const { logout } = this.props;
-
         const linkTo = {
             pathname: '/my-account',
             state: 'accountOverview'

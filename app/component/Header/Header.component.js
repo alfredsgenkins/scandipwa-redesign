@@ -184,9 +184,14 @@ class Header extends Component {
     }
 
     renderAccountButton(isVisible) {
+        const linkTo = {
+            pathname: '/my-account',
+            state: 'accountOverview'
+        };
+
         return isSignedIn()
             ? (
-                <NavLink to="my-account">
+                <NavLink to={ linkTo }>
                     <button
                       block="Header"
                       elem="Button"

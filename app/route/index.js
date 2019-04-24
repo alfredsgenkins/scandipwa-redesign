@@ -9,11 +9,13 @@ class AppRouter extends Component {
     render() {
         return (
             <>
-                <Header />
                 <Router>
-                    <Switch>
-                        <Route path="/" exact component={ ProductPage } />
-                    </Switch>
+                    <>
+                        <Header />
+                        <Switch>
+                            <Route path="/" exact component={ ProductPage } />
+                        </Switch>
+                    </>
                 </Router>
             </>
         );

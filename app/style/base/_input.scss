@@ -11,6 +11,10 @@
 
  :root {
      --input-border-color: #e0e0e0;
+     --checkbox-radio-disabled-color: #b8b8b8;
+     --checkbox-radio-box-color: #ffffff;
+     --checkbox-radio-border-color: #d8d8d8;
+     --checkbox-checkmark-color: #f26323;
  }
 
  input,
@@ -84,8 +88,8 @@
          padding: 0;
          width: 1.5rem;
          height: 1.5rem;
-         background-color: var(--box-color);
-         border: 1px solid color(neutral, base);
+         background-color: var(--checkbox-radio-box-color);
+         border: 1px solid var(--checkbox-radio-border-color);
          transition-property: background-color, border-color;
          transition-duration: .25s;
          transition-timing-function: ease-in;
@@ -103,26 +107,22 @@
          }
  
          &:hover {
-             --box-color: #{transparentize(color(neutral, light, true), .4)};
              border-color: color(primary, base);
  
              &::after {
-                 --checkmark-color: #{color(neutral, base, true)};
+                 --checkmark-color: var(--checkbox-radio-border-color);
              }
          }
      }
  
      &:disabled + label {
-         color: #b8b8b8;
+         color: var(--checkbox-radio-disabled-color);
          cursor: auto;
      }
  
      &:checked + label {
-         background-color: color(primary, base, true);
-         border-color: color(primary, base, true);
- 
          &::after {
-             --checkmark-color: #{color(text, white, true)};
+             --checkmark-color: var(--checkbox-checkmark-color);
          }
      }
  }
